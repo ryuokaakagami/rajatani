@@ -9,11 +9,24 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  icons_plus_pro: ^6.0.0
+  loading_animation_widget: ^1.3.0
 
 dev_dependencies:
+  flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^6.0.0
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/fonts/
+    - assets/icons/
+
+  fonts:
+    - family: JakartaSans
+      fonts:
+        - asset: assets/fonts/PlusJakartaSans-VariableFont_wght.ttf
+        - asset: assets/fonts/PlusJakartaSans-Italic-VariableFont_wght.ttf
+          style: italic
