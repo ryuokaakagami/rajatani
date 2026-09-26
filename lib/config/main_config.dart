@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../shared/theme/theme.dart';
-import 'main_home.dart';
+import 'routes/router/router.dart';
 
 class MainConfig extends StatelessWidget {
   const new({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Raja Tani',
       theme: AppTheme(brightness: .light).theme,
       darkTheme: AppTheme(brightness: .dark).theme,
@@ -22,7 +22,7 @@ class MainConfig extends StatelessWidget {
         ),
         child: child!,
       ),
-      home: const MainHome(),
+      routerConfig: router,
     );
   }
 }

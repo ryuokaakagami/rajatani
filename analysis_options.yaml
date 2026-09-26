@@ -9,3 +9,6 @@ analyzer:
 linter: 
   rules:
     - prefer_relative_imports
+
+formatter: 
+  page_width: 120
