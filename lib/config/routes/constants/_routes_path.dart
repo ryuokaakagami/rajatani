@@ -5,4 +5,5 @@ class _RoutesPath {
 
   final String initial = '/';
   final String signIn = '/sign-in';
+  final String verification = 'verification';
 }

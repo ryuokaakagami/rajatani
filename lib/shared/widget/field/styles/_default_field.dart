@@ -1,10 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+part of '../field.dart';
 
-import '../constant/spacing_size.dart';
-import '../theme/app_theme.dart';
-
-class AppField extends StatelessWidget {
+class _DefaultField extends StatelessWidget {
   final ValueChanged<String?>? onSubmitted;
   final VoidCallback? onTap;
   final bool isLoading, readOnly;
@@ -19,11 +15,10 @@ class AppField extends StatelessWidget {
   final List<TextInputFormatter>? formatters;
 
   const new({
-    super.key,
     this.onSubmitted,
     this.onTap,
-    this.isLoading = false,
-    this.readOnly = false,
+    required this.isLoading,
+    required this.readOnly,
     this.controller,
     this.focusNode,
     this.validator,
