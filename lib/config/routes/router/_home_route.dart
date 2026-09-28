@@ -1,9 +1,13 @@
 part of 'router.dart';
 
-final _homeRoute = GoRoute(
-  path: RoutesConstant.paths.home,
-  name: RoutesConstant.names.home,
-  builder: (context, state) => const Home(),
+final _homeRoute = StatefulShellBranch(
+  routes: [
+    GoRoute(
+      path: RoutesConstant.paths.home,
+      name: RoutesConstant.names.home,
+      builder: (context, state) => const Home(),
+    ),
+  ],
 );
 
 class Home extends StatelessWidget {

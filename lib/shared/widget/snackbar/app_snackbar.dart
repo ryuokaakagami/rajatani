@@ -13,7 +13,7 @@ class AppSnackbar {
     return SnackBar(
       backgroundColor: backgroundColor,
       behavior: .floating,
-      margin: const .all(SpacingSize.xl),
+      margin: const .symmetric(horizontal: SpacingSize.xl, vertical: 80.0),
       shape: RoundedRectangleBorder(
         borderRadius: .circular(RadiusSize.sm),
         side: BorderSide(color: borderColor, width: StrokeSize.thin),

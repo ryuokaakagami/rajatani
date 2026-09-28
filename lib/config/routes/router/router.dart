@@ -12,6 +12,8 @@ import '../helper/routes_refresh.dart';
 
 part '_auth_route.dart';
 part '_home_route.dart';
+part '_orders_route.dart';
+part '_profile_route.dart';
 
 final _session = sl<SessionCubit>();
 final _refresh = RoutesRefresh(session: _session.stream);
@@ -30,6 +32,11 @@ final router = GoRouter(
 
     _authRoute,
 
-    _homeRoute,
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return DashboardScreen(navigationShell: navigationShell);
+      },
+      branches: [_homeRoute, _ordersRoute, _profileRoute],
+    ),
   ],
 );
