@@ -1,12 +1,17 @@
 import 'package:get_it/get_it.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../core/core.dart';
 import '../../feature/feature.dart';
+import '../../shared/shared.dart';
+
+part '_clients_locator.dart';
+part '_auth_locator.dart';
 
 final sl = GetIt.instance;
 
 void initLocator() {
-  sl.registerFactory(() => SignInModeCubit());
-  sl.registerFactory(() => SignInCubit());
-  sl.registerFactory(() => ResendTimerCubit());
-  sl.registerFactory(() => SignInVerificationCubit());
+  _clientLocator();
+  _authLocator();
 }

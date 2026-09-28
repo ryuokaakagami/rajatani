@@ -27,7 +27,6 @@ class SignInVerificationScreen extends StatelessWidget {
               context.read<ResendTimerCubit>().start();
               return;
             }
-            context.snackBarSuccess('Welcome');
           },
           error: (message) => context.snackBarError(message),
           orElse: () {},
@@ -39,7 +38,11 @@ class SignInVerificationScreen extends StatelessWidget {
             AuthHeader.verification(contact: contact, isPhoneMode: isPhoneMode),
             SignInVerificationForm(
               verifySignIn: (value) {
-                cubit.verify(contact: contact, otp: value, isPhoneMode: isPhoneMode);
+                cubit.verify(
+                  contact: contact,
+                  otp: value,
+                  isPhoneMode: isPhoneMode,
+                );
               },
               isLoading: state.isVerifyLoading,
               isOtherLoading: state.isResendLoading,

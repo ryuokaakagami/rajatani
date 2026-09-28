@@ -1,12 +1,26 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart';
 
 import '../../../feature/feature.dart';
+import '../../../shared/shared.dart';
 import '../../service/locator.dart';
 import '../constants/routes_constant.dart';
+import '../helper/routes_guard.dart';
+import '../helper/routes_refresh.dart';
+
+part '_auth_route.dart';
+part '_home_route.dart';
+
+final _session = sl<SessionCubit>();
+final _refresh = RoutesRefresh(session: _session.stream);
+final _guard = RoutesGuard(cubit: _session, refresh: _refresh);
 
 final router = GoRouter(
   initialLocation: RoutesConstant.paths.initial,
+  refreshListenable: _refresh,
+  redirect: _guard.redirect,
   routes: [
     GoRoute(
       path: RoutesConstant.paths.initial,
@@ -14,34 +28,8 @@ final router = GoRouter(
       builder: (context, state) => const SplashScreen(),
     ),
 
-    GoRoute(
-      path: RoutesConstant.paths.signIn,
-      name: RoutesConstant.names.signIn,
-      builder: (context, state) {
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (_) => sl<SignInModeCubit>()),
-            BlocProvider(create: (_) => sl<SignInCubit>()),
-          ],
-          child: const SignInScreen(),
-        );
-      },
-      routes: [
-        GoRoute(
-          path: RoutesConstant.paths.verification,
-          name: RoutesConstant.names.signInVerification,
-          builder: (context, state) {
-            final (String contact, bool isPhoneMode) = state.extra as (String, bool);
-            return MultiBlocProvider(
-              providers: [
-                BlocProvider(create: (_) => sl<ResendTimerCubit>()),
-                BlocProvider(create: (_) => sl<SignInVerificationCubit>()),
-              ],
-              child: SignInVerificationScreen(contact: contact, isPhoneMode: isPhoneMode),
-            );
-          },
-        ),
-      ],
-    ),
+    _authRoute,
+
+    _homeRoute,
   ],
 );

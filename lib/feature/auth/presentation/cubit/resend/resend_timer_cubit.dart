@@ -9,7 +9,9 @@ part 'resend_timer_cubit.freezed.dart';
 class ResendTimerCubit extends Cubit<ResendTimerState> {
   Timer? _timer;
 
-  new() : super(ResendTimerState.initial(30));
+  new() : super(ResendTimerState.initial(30)) {
+    start();
+  }
 
   void start() {
     _timer?.cancel();
@@ -22,11 +24,18 @@ class ResendTimerCubit extends Cubit<ResendTimerState> {
 
     final nextIncrement = (current + 15).clamp(30, 60).toInt();
 
-    emit(ResendTimerState.progress(remaining: current, increment: nextIncrement));
+    emit(
+      ResendTimerState.progress(remaining: current, increment: nextIncrement),
+    );
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (state.remaining > 1) {
-        emit(ResendTimerState.progress(remaining: state.remaining - 1, increment: state.increment));
+        emit(
+          ResendTimerState.progress(
+            remaining: state.remaining - 1,
+            increment: state.increment,
+          ),
+        );
         return;
       }
       emit(ResendTimerState.initial(state.increment));

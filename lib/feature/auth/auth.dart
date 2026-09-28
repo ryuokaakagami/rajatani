@@ -13,3 +13,13 @@ export 'presentation/widgets/auth_header.dart';
 export 'presentation/widgets/auth_layout.dart';
 export 'presentation/widgets/auth_mode_switcher.dart';
 export 'presentation/widgets/or_divider.dart';
+
+export 'data/sources/remote/auth_remote.dart';
+export 'data/sources/remote/auth_remote_impl.dart';
+export 'data/sources/repositories/auth_repository_impl.dart';
+
+export 'domain/repositories/auth_repository.dart';
+export 'domain/use_cases/sign_in_resend_code.dart';
+export 'domain/use_cases/sign_in_verification.dart';
+export 'domain/use_cases/sign_in_with_google.dart';
+export 'domain/use_cases/sign_in_with_otp.dart';
