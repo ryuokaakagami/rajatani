@@ -1,0 +1,4 @@
+{
+  "dart.flutterRunAdditionalArgs": ["--dart-define-from-file=.dev.env"],
+  "terminal.integrated.defaultProfile.linux": "fish"
+}

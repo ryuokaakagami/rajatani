@@ -6,9 +6,20 @@
       "request": "launch",
       "type": "dart",
       "program": "lib/main.dart",
-      "args": [
-        "--dart-define-from-file=.dev.env"
-      ]
+    },
+    {
+      "name": "Raja Tani (dev, profile)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "program": "lib/main.dart",
+    },
+    {
+      "name": "Raja Tani (dev, release)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release",
+      "program": "lib/main.dart",
     }
   ]
 }
