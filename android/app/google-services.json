@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "823861659493",
+    "project_id": "rajatani-633fd",
+    "storage_bucket": "rajatani-633fd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823861659493:android:6ed507a91047fb8282c38c",
+        "android_client_info": {
+          "package_name": "com.ryuoka.rajatani"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCC3yfbuWgIltwVCrV6NQ5YjIddM7Pxegg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

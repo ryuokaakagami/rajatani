@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,11 +13,23 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'config/env_config.dart';
 import 'config/main_config.dart';
 import 'config/service/locator.dart';
+import 'firebase_options.dart';
 import 'shared/shared.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
 
   await Supabase.initialize(
     url: EnvConfig.supabaseUrl,
