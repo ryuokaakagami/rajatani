@@ -3,14 +3,14 @@ part of 'field.dart';
 class AppField extends StatelessWidget {
   final ValueChanged<String?>? onSubmitted;
   final VoidCallback? onTap;
-  final bool isLoading, readOnly, isDefault;
+  final bool isLoading, isDisabled, readOnly, isDefault;
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final String? Function(String?)? validator;
   final TextInputAction? inputAction;
   final TextInputType? type;
   final String? hintText, label;
-  final int? minLines, maxLines;
+  final int? minLines, maxLines, maxLength;
   final Widget? prefixIcon, suffixIcon;
   final List<TextInputFormatter>? formatters;
 
@@ -19,6 +19,7 @@ class AppField extends StatelessWidget {
     this.onSubmitted,
     this.onTap,
     this.isLoading = false,
+    this.isDisabled = false,
     this.readOnly = false,
     this.controller,
     this.focusNode,
@@ -29,6 +30,7 @@ class AppField extends StatelessWidget {
     this.label,
     this.minLines,
     this.maxLines,
+    this.maxLength,
     this.prefixIcon,
     this.suffixIcon,
     this.formatters,
@@ -37,10 +39,11 @@ class AppField extends StatelessWidget {
   const new otp({
     super.key,
     this.onSubmitted,
-    this.isLoading = false,
+    this.isDisabled = false,
     this.controller,
     this.validator,
-  }) : isDefault = false,
+  }) : isLoading = false,
+       isDefault = false,
        readOnly = false,
        onTap = null,
        focusNode = null,
@@ -50,6 +53,7 @@ class AppField extends StatelessWidget {
        label = null,
        minLines = null,
        maxLines = null,
+       maxLength = null,
        prefixIcon = null,
        suffixIcon = null,
        formatters = null;
@@ -61,6 +65,7 @@ class AppField extends StatelessWidget {
         onSubmitted: onSubmitted,
         onTap: onTap,
         isLoading: isLoading,
+        isDisabled: isDisabled,
         readOnly: readOnly,
         controller: controller,
         focusNode: focusNode,
@@ -71,6 +76,7 @@ class AppField extends StatelessWidget {
         label: label,
         minLines: minLines,
         maxLines: maxLines,
+        maxLength: maxLength,
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         formatters: formatters,
@@ -78,7 +84,7 @@ class AppField extends StatelessWidget {
     }
 
     return _OtpField(
-      isLoading: isLoading,
+      isLoading: isDisabled,
       onSubmitted: onSubmitted,
       controller: controller,
       validator: validator,

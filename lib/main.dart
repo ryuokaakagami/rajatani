@@ -51,6 +51,6 @@ void main() async {
   );
 
   runApp(
-    BlocProvider(create: (_) => sl<SessionCubit>(), child: const MainConfig()),
+    BlocProvider.value(value: sl<SessionCubit>(), child: const MainConfig()),
   );
 }

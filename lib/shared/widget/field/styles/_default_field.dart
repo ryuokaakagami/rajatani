@@ -3,14 +3,14 @@ part of '../field.dart';
 class _DefaultField extends StatelessWidget {
   final ValueChanged<String?>? onSubmitted;
   final VoidCallback? onTap;
-  final bool isLoading, readOnly;
+  final bool isLoading, isDisabled, readOnly;
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final String? Function(String?)? validator;
   final TextInputAction? inputAction;
   final TextInputType? type;
   final String? hintText, label;
-  final int? minLines, maxLines;
+  final int? minLines, maxLines, maxLength;
   final Widget? prefixIcon, suffixIcon;
   final List<TextInputFormatter>? formatters;
 
@@ -18,6 +18,7 @@ class _DefaultField extends StatelessWidget {
     this.onSubmitted,
     this.onTap,
     required this.isLoading,
+    required this.isDisabled,
     required this.readOnly,
     this.controller,
     this.focusNode,
@@ -28,6 +29,7 @@ class _DefaultField extends StatelessWidget {
     this.label,
     this.minLines,
     this.maxLines,
+    this.maxLength,
     this.prefixIcon,
     this.suffixIcon,
     this.formatters,
@@ -36,7 +38,7 @@ class _DefaultField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void handleSubmit(String? value) {
-      if (!isLoading) {
+      if (!isLoading && !isDisabled) {
         onSubmitted?.call(value);
       }
     }
@@ -52,12 +54,15 @@ class _DefaultField extends StatelessWidget {
       style: context.textTheme.bodyLarge,
       minLines: minLines ?? 1,
       maxLines: maxLines ?? 1,
+      maxLength: maxLength,
       readOnly: readOnly,
       inputFormatters: formatters,
       decoration: InputDecoration(
         hintText: hintText,
         prefixIcon: prefixIcon,
-        suffixIcon: suffixIcon,
+        suffixIcon: isLoading
+            ? SizedBox(width: IconSize.xs, child: AppLoading())
+            : suffixIcon,
       ),
     );
 

@@ -10,7 +10,12 @@ class SignInVerificationForm extends StatefulWidget {
   final ValueChanged<String>? verifySignIn;
   final bool isLoading, isOtherLoading;
 
-  const new({super.key, this.verifySignIn, required this.isLoading, required this.isOtherLoading});
+  const new({
+    super.key,
+    this.verifySignIn,
+    required this.isLoading,
+    required this.isOtherLoading,
+  });
 
   @override
   State<SignInVerificationForm> createState() => _SignInVerificationFormState();
@@ -44,7 +49,7 @@ class _SignInVerificationFormState extends State<SignInVerificationForm> {
           onSubmitted: (_) => _handleVerify(),
           controller: _otpCtrl,
           validator: _validator.call,
-          isLoading: isLoading || isDisabled,
+          isDisabled: isLoading || isDisabled,
         ),
 
         AppButton(

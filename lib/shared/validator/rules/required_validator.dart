@@ -7,7 +7,7 @@ class RequiredValidator implements FieldValidator {
 
   @override
   String? validate(String? value) {
-    if (value == null || value.isEmpty) return '$fieldName tidak boleh kosong';
+    if (value == null || value.isEmpty) return '$fieldName is required';
     return null;
   }
 }

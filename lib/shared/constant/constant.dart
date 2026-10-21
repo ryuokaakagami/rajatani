@@ -5,3 +5,6 @@ export 'spacing_size.dart';
 export 'stroke_size.dart';
 export 'icon_asset.dart';
 export 'app_regex.dart';
+export 'avatar_size.dart';
+export 'app_icon.dart';
+export 'app_string.dart';

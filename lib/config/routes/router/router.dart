@@ -7,6 +7,7 @@ import '../../../feature/feature.dart';
 import '../../../shared/shared.dart';
 import '../../service/locator.dart';
 import '../constants/routes_constant.dart';
+import '../helper/router_page_transition.dart';
 import '../helper/routes_guard.dart';
 import '../helper/routes_refresh.dart';
 
@@ -18,23 +19,30 @@ part '_profile_route.dart';
 final _session = sl<SessionCubit>();
 final _refresh = RoutesRefresh(session: _session.stream);
 final _guard = RoutesGuard(cubit: _session, refresh: _refresh);
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
   initialLocation: RoutesConstant.paths.initial,
   refreshListenable: _refresh,
   redirect: _guard.redirect,
+  navigatorKey: _rootNavigatorKey,
   routes: [
     GoRoute(
       path: RoutesConstant.paths.initial,
       name: RoutesConstant.names.splash,
-      builder: (context, state) => const SplashScreen(),
+      pageBuilder: (context, state) {
+        return transitionPage(key: state.pageKey, child: const SplashScreen());
+      },
     ),
 
     _authRoute,
 
     StatefulShellRoute.indexedStack(
-      builder: (context, state, navigationShell) {
-        return DashboardScreen(navigationShell: navigationShell);
+      pageBuilder: (context, state, navigationShell) {
+        return transitionPage(
+          key: state.pageKey,
+          child: DashboardScreen(navigationShell: navigationShell),
+        );
       },
       branches: [_homeRoute, _ordersRoute, _profileRoute],
     ),

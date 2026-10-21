@@ -3,17 +3,14 @@ part of '../app_exception.dart';
 // --- General Auth Exceptions ---
 class AuthRateLimitException extends AppException {
   const new()
-    : super(
-        message:
-            'Terlalu banyak percobaan. Silakan coba lagi dalam beberapa menit.',
-      );
+    : super(message: 'Too many attempts. Please try again in a few minutes.');
 }
 
 class AuthUserBannedException extends AppException {
   const new()
     : super(
         message:
-            'Akun ini telah ditangguhkan. Silakan hubungi layanan pelanggan.',
+            'This account has been suspended. Please contact customer service.',
       );
 }
 
@@ -21,47 +18,47 @@ class AuthInvalidCredentialsException extends AppException {
   const new()
     : super(
         message:
-            'Kredensial tidak valid. Silakan periksa data Anda dan coba lagi.',
+            'Invalid credentials. Please check your details and try again.',
       );
 }
 
 class AuthOtpExpiredException extends AppException {
   const new()
-    : super(message: 'Kode OTP telah kedaluwarsa. Silakan minta kode baru.');
+    : super(message: 'The OTP code has expired. Please request a new one.');
 }
 
 class AuthOtpDisabledException extends AppException {
-  const new() : super(message: 'Verifikasi OTP saat ini tidak tersedia.');
+  const new() : super(message: 'OTP verification is currently unavailable.');
 }
 
 class AuthSmsFailedException extends AppException {
   const new()
     : super(
-        message: 'Gagal mengirim SMS OTP. Pastikan nomor telepon Anda valid dan aktif.',
+        message: 'Failed to send SMS OTP. Please ensure your phone number is valid and active.',
       );
 }
 
 class AuthInvalidEmailException extends AppException {
-  const new() : super(message: 'Alamat email tidak valid atau tidak didukung.');
+  const new() : super(message: 'The email address is invalid or unsupported.');
 }
 
 // --- Google Sign-In Exceptions ---
 class AuthGoogleInterruptedException extends AppException {
   const new()
-    : super(message: 'Proses login Google terputus. Silakan coba lagi.');
+    : super(message: 'Google sign-in was interrupted. Please try again.');
 }
 
 class AuthGoogleUnavailableException extends AppException {
   const new()
     : super(
         message:
-            'Login Google saat ini tidak tersedia. Silakan coba lagi nanti.',
+            'Google sign-in is currently unavailable. Please try again later.',
       );
 }
 
 class AuthGoogleUserMismatchException extends AppException {
   const new()
     : super(
-        message: 'Ada masalah pada akun Anda. Silakan keluar dan coba lagi.',
+        message: 'There is an issue with your account. Please sign out and try again.',
       );
 }

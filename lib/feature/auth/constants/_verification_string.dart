@@ -1,12 +1,12 @@
 part of 'auth_string.dart';
 
-class _VerifcationString {
+class _VerificationString {
   const new();
 
   final title = 'Verification';
   String subtitle(String contact) =>
-      'Silakan masukkan 6 digit kode yang baru saja kami kirimkan ke '
-      '$contact untuk memverifikasi akun Anda.';
+      'Please enter the 6-digit code we just sent to '
+      '$contact to verify your account.';
 
   final buttonVerifyLabel = 'Verify';
 

@@ -52,7 +52,7 @@ void _setupSessionCore() {
   sl.registerLazySingleton(() => SignOut(repository: sl<SessionRepository>()));
 
   // --- Presentation Layer (Global Cubit) ---
-  sl.registerFactory(
+  sl.registerLazySingleton(
     () => SessionCubit(
       observeSession: sl<ObserveSession>(),
       signOut: sl<SignOut>(),

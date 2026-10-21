@@ -2,11 +2,9 @@ part of '../app_exception.dart';
 
 class NetworkException extends AppException {
   const new()
-    : super(
-        message: 'Tidak ada koneksi internet. Silakan periksa jaringan Anda.',
-      );
+    : super(message: 'No internet connection. Please check your network.');
 }
 
 class TimeOutException extends AppException {
-  const new() : super(message: 'Waktu koneksi habis. Silakan coba lagi.');
+  const new() : super(message: 'Connection timed out. Please try again.');
 }

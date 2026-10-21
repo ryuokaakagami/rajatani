@@ -6,7 +6,7 @@ class PhoneValidator implements FieldValidator {
   String? validate(String? value) {
     if (value == null || value.isEmpty) return null;
     if (!AppRegex.phoneRegex.hasMatch(value)) {
-      return 'Nomor handphone tidak valid';
+      return 'Invalid phone number';
     }
     return null;
   }

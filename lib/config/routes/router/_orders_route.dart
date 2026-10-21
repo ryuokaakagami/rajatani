@@ -5,7 +5,9 @@ final _ordersRoute = StatefulShellBranch(
     GoRoute(
       path: RoutesConstant.paths.orders,
       name: RoutesConstant.names.orders,
-      builder: (context, state) => const Orders(),
+      pageBuilder: (context, state) {
+        return transitionPage(key: state.pageKey, child: const Orders());
+      },
     ),
   ],
 );
@@ -18,14 +20,7 @@ class Orders extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: AppButton.ghost(
-          onPressed: () async {
-            await context.dialogDestructive(
-              title: 'Sign Out',
-              message: 'Are you sure you want to sign out of your account?',
-              destructiveText: 'Sign Out',
-              onConfirm: context.read<SessionCubit>().signOut,
-            );
-          },
+          onPressed: () async {},
           icon: Iconsax.receipt_2_1_outline,
           label: 'Orders',
         ),

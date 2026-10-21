@@ -6,7 +6,7 @@ class EmailValidator implements FieldValidator {
   String? validate(String? value) {
     if (value == null || value.isEmpty) return null;
     if (!AppRegex.emailRegex.hasMatch(value)) {
-      return 'Alamat email tidak valid';
+      return 'Invalid email address';
     }
     return null;
   }

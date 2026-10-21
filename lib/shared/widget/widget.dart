@@ -4,3 +4,6 @@ export 'button/button.dart';
 export 'footer_watermark.dart';
 export 'snackbar/snackbar.dart';
 export 'dialog/dialog.dart';
+export 'menu/menu.dart';
+export 'bottom_sheet/bottom_sheet.dart';
+export 'image/image.dart';

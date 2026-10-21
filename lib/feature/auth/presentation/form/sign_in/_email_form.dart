@@ -4,7 +4,11 @@ class _EmailForm extends StatefulWidget {
   final ValueChanged<String>? onSignIn;
   final bool isLoading, isOtherLoading;
 
-  const new({this.onSignIn, required this.isLoading, required this.isOtherLoading});
+  const new({
+    this.onSignIn,
+    required this.isLoading,
+    required this.isOtherLoading,
+  });
 
   @override
   State<_EmailForm> createState() => _EmailFormState();
@@ -38,10 +42,10 @@ class _EmailFormState extends State<_EmailForm> {
           onSubmitted: (_) => _handleSignIn(),
           controller: _emailCtrl,
           validator: _validator.call,
-          isLoading: isLoading || isDisbaled,
-          hintText: AuthString.signIn.emailHint,
-          prefixIcon: Icon(AuthIcon.email),
-          label: AuthString.signIn.emailLabel,
+          isDisabled: isLoading || isDisbaled,
+          hintText: AppString.emailHint,
+          prefixIcon: Icon(AppIcon.email),
+          label: AppString.emailLabel,
           type: .emailAddress,
         ),
 

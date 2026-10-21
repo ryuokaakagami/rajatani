@@ -8,6 +8,7 @@ class _FloatingButton extends StatelessWidget {
   final Widget child;
   final Object? heroTag;
   final ShapeBorder? shape;
+  final double? elevation;
 
   const new({
     required this.type,
@@ -19,6 +20,7 @@ class _FloatingButton extends StatelessWidget {
     this.heroTag,
     this.shape,
     required this.child,
+    this.elevation,
   });
 
   @override
@@ -30,6 +32,7 @@ class _FloatingButton extends StatelessWidget {
         foregroundColor: foreground,
         heroTag: heroTag,
         shape: shape,
+        elevation: elevation,
         child: child,
       ),
 
@@ -39,6 +42,7 @@ class _FloatingButton extends StatelessWidget {
         foregroundColor: foreground,
         heroTag: heroTag,
         shape: shape,
+        elevation: elevation,
         child: child,
       ),
 
@@ -48,6 +52,7 @@ class _FloatingButton extends StatelessWidget {
         foregroundColor: foreground,
         heroTag: heroTag,
         shape: shape,
+        elevation: elevation,
         label: child,
       ),
 
@@ -57,6 +62,7 @@ class _FloatingButton extends StatelessWidget {
         foregroundColor: foreground,
         heroTag: heroTag,
         shape: shape,
+        elevation: elevation,
         child: child,
       ),
     };

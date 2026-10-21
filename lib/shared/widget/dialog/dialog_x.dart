@@ -87,4 +87,13 @@ extension DialogX on BuildContext {
       ),
     );
   }
+
+  Future<void> dialogLogOut() async {
+    return await dialogDestructive(
+      title: 'Sign Out',
+      message: 'Are you sure you want to sign out of your account?',
+      destructiveText: 'Sign Out',
+      onConfirm: read<SessionCubit>().signOut,
+    );
+  }
 }

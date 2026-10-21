@@ -8,7 +8,7 @@ class AppButton extends StatelessWidget {
   final String? imageAsset, label;
   final IconData? icon;
   final Color? backgroundColor, foregroundColor;
-  final double? iconSize;
+  final double? iconSize, elevation;
   final Size? minimumSize;
   final Object? heroTag;
   final ShapeBorder? shape;
@@ -28,6 +28,7 @@ class AppButton extends StatelessWidget {
   }) : _type = .filled,
        type = null,
        iconSize = null,
+       elevation = null,
        heroTag = null,
        shape = null;
 
@@ -46,6 +47,7 @@ class AppButton extends StatelessWidget {
   }) : _type = .outlined,
        type = null,
        iconSize = null,
+       elevation = null,
        heroTag = null,
        shape = null;
 
@@ -63,6 +65,7 @@ class AppButton extends StatelessWidget {
   }) : _type = .ghost,
        isMinimized = false,
        type = null,
+       elevation = null,
        minimumSize = null,
        heroTag = null,
        shape = null;
@@ -81,6 +84,7 @@ class AppButton extends StatelessWidget {
     this.type,
     this.heroTag,
     this.shape,
+    this.elevation,
   }) : _type = .floating,
        isMinimized = false,
        minimumSize = null;
@@ -134,6 +138,7 @@ class AppButton extends StatelessWidget {
         isLoading: isLoading,
         isDisabled: isDisabled,
         shape: shape,
+        elevation: elevation,
         child: child,
       ),
 
