@@ -1,9 +1,9 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../app_exception.dart';
-import 'auth_exception_mapper.dart';
+import '../app_exception_mapper.dart';
 
-class SupabaseAuthMapperException implements AuthExceptionMapper {
+class SupabaseAuthMapperException implements AppExceptionMapper {
   const new();
 
   @override

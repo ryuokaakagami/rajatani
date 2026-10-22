@@ -3,15 +3,15 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../domain/repositories/session_repository.dart';
 import '../../../error/app_exception.dart';
-import '../../../error/handler/auth_exception_handler.dart';
+import '../../../error/mapper/app_exception_mapper.dart';
 import '../../../utils/safe_call.dart';
 import '../remote/session_remote.dart';
 
 class SessionRepositoryImpl with SafeCall implements SessionRepository {
   final SessionRemote _remote;
-  final AuthExceptionHandler _exceptionHandler;
+  final AppExceptionMapper _exceptionMapper;
 
-  const new({required this._remote, required this._exceptionHandler});
+  const new({required this._remote, required this._exceptionMapper});
 
   @override
   Stream<Session?> authChange() {
@@ -22,7 +22,7 @@ class SessionRepositoryImpl with SafeCall implements SessionRepository {
   Future<Either<AppException, Unit>> signOut() {
     return call(
       doAction: () => _remote.signOut(),
-      customErrorHandler: _exceptionHandler.map,
+      customErrorHandler: _exceptionMapper.map,
     );
   }
 }

@@ -1,9 +1,9 @@
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../app_exception.dart';
-import 'auth_exception_mapper.dart';
+import '../app_exception_mapper.dart';
 
-class GoogleAuthMapperException implements AuthExceptionMapper {
+class GoogleAuthMapperException implements AppExceptionMapper {
   const new();
 
   @override

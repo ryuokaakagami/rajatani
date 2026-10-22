@@ -23,6 +23,7 @@ class SupabaseAuthClient implements AuthClient {
     idToken: idToken,
     accessToken: accessToken,
   );
+
   @override
   Future<void> verify({
     required OtpType type,

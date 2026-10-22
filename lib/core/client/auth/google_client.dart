@@ -1,4 +1,3 @@
-import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../error/app_exception.dart';
@@ -25,10 +24,10 @@ class GoogleClient implements SocialAuthClient {
 
     final idToken = account.authentication.idToken;
 
-    throwIf(idToken == null, UnknownException());
+    if (idToken == null) throw const UnknownException();
 
     return GoogleToken(
-      idToken: idToken!,
+      idToken: idToken,
       accessToken: authorization.accessToken,
     );
   }

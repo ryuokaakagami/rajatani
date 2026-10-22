@@ -1,30 +1,37 @@
 part of 'locator.dart';
 
+enum AuthLocatorInstance { supabaseAuth, googleAuth, authErrorMapper }
+
 void _authLocator() {
-  _setupErrorHandlers();
+  _setupAuthErrorMappers();
   _setupSessionCore();
   _setupAuthFeature();
 }
 
 /// Menyiapkan semua mapping error secara global
-void _setupErrorHandlers() {
-  sl.registerLazySingleton<AuthExceptionMapper>(
+void _setupAuthErrorMappers() {
+  sl.registerLazySingleton<AppExceptionMapper>(
     () => SupabaseAuthMapperException(),
-    instanceName: 'supabase_auth',
+    instanceName: AuthLocatorInstance.supabaseAuth.name,
   );
 
-  sl.registerLazySingleton<AuthExceptionMapper>(
+  sl.registerLazySingleton<AppExceptionMapper>(
     () => GoogleAuthMapperException(),
-    instanceName: 'google_auth',
+    instanceName: AuthLocatorInstance.googleAuth.name,
   );
 
-  sl.registerLazySingleton(
-    () => AuthExceptionHandler(
+  sl.registerLazySingleton<AppExceptionMapper>(
+    () => CompositeExceptionMapper(
       mappers: [
-        sl<AuthExceptionMapper>(instanceName: 'supabase_auth'),
-        sl<AuthExceptionMapper>(instanceName: 'google_auth'),
+        sl<AppExceptionMapper>(
+          instanceName: AuthLocatorInstance.supabaseAuth.name,
+        ),
+        sl<AppExceptionMapper>(
+          instanceName: AuthLocatorInstance.googleAuth.name,
+        ),
       ],
     ),
+    instanceName: AuthLocatorInstance.authErrorMapper.name,
   );
 }
 
@@ -40,7 +47,9 @@ void _setupSessionCore() {
   sl.registerLazySingleton<SessionRepository>(
     () => SessionRepositoryImpl(
       remote: sl<SessionRemote>(),
-      exceptionHandler: sl<AuthExceptionHandler>(),
+      exceptionMapper: sl<AppExceptionMapper>(
+        instanceName: AuthLocatorInstance.authErrorMapper.name,
+      ),
     ),
   );
 
@@ -72,7 +81,9 @@ void _setupAuthFeature() {
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
       remote: sl<AuthRemote>(),
-      exceptionHandler: sl<AuthExceptionHandler>(),
+      exceptionMapper: sl<AppExceptionMapper>(
+        instanceName: AuthLocatorInstance.authErrorMapper.name,
+      ),
     ),
   );
 

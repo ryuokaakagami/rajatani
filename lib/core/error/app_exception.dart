@@ -1,5 +1,6 @@
 part 'rules/auth_exception.dart';
 part 'rules/network_exception.dart';
+part 'rules/database_exception.dart';
 
 abstract class AppException {
   final String message;
