@@ -9,13 +9,17 @@ import '../../shared/shared.dart';
 
 part '_clients_locator.dart';
 part '_auth_locator.dart';
+part '_user_locator.dart';
+part '_error_mapper_locator.dart';
 
 final sl = GetIt.instance;
 
 void initLocator() {
   _mediaInjection();
-  _clientLocator();
-  _authLocator();
+  _errorInjection();
+  _clientInjection();
+  _authInjection();
+  _userInjection();
 }
 
 void _mediaInjection() {

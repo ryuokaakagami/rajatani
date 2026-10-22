@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../domain/repositories/session_repository.dart';
-import '../../../error/app_exception.dart';
-import '../../../error/mapper/app_exception_mapper.dart';
-import '../../../utils/safe_call.dart';
+import '../../../../domain/session/repositories/session_repository.dart';
+import '../../../../error/app_exception.dart';
+import '../../../../error/mapper/app_exception_mapper.dart';
+import '../../../../utils/safe_call.dart';
 import '../remote/session_remote.dart';
 
 class SessionRepositoryImpl with SafeCall implements SessionRepository {

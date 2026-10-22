@@ -21,9 +21,6 @@ class _Header extends StatelessWidget {
     final hasName = fullname != null && fullname!.isNotEmpty;
     final hasUsername = username != null && username!.isNotEmpty;
 
-    final displayFullname = hasName ? fullname! : 'User';
-    final displayUsername = (hasUsername ? username! : 'user').asMention;
-
     return Column(
       mainAxisSize: .min,
       spacing: SpacingSize.md,
@@ -36,14 +33,15 @@ class _Header extends StatelessWidget {
 
         Column(
           children: [
-            Text(displayFullname, style: textTheme.titleLarge),
+            if (hasName) Text(fullname!, style: textTheme.titleLarge),
 
-            Text(
-              displayUsername,
-              style: textTheme.bodyMedium?.copyWith(
-                color: scheme.onSurfaceVariant,
+            if (hasUsername)
+              Text(
+                username!.asMention,
+                style: textTheme.bodyMedium?.copyWith(
+                  color: scheme.onSurfaceVariant,
+                ),
               ),
-            ),
           ],
         ),
       ],

@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../client/auth/auth_client.dart';
-import '../../../client/auth/social_auth_client.dart';
+import '../../../../client/auth/auth_client.dart';
+import '../../../../client/auth/social_auth_client.dart';
 import 'session_remote.dart';
 
 class SessionRemoteImpl implements SessionRemote {

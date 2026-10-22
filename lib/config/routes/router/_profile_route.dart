@@ -19,7 +19,7 @@ final _profileRoute = StatefulShellBranch(
           pageBuilder: (context, state) {
             return transitionPage(
               key: state.pageKey,
-              child: const ProfileDetailScreen(),
+              child: ProfileDetailScreen(data: state.extra as UserEntity?),
             );
           },
           routes: [
@@ -28,9 +28,13 @@ final _profileRoute = StatefulShellBranch(
               path: RoutesConstant.paths.photo,
               name: RoutesConstant.names.photoProfile,
               pageBuilder: (context, state) {
+                final extra = state.extra as Map<String, dynamic>?;
+
+                final id = extra?['id'] as String? ?? '';
+                final avatarUrl = extra?['avatarUrl'] as String? ?? '';
                 return transitionPage(
                   key: state.pageKey,
-                  child: const ProfilePhotoScreen(),
+                  child: ProfilePhotoScreen(id: id, avatarUrl: avatarUrl),
                 );
               },
             ),

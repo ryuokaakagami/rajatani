@@ -1,7 +1,7 @@
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../error/app_exception.dart';
-import '../../data/models/google_token.dart';
+import '../../data/session/models/google_token.dart';
 import 'social_auth_client.dart';
 
 class GoogleClient implements SocialAuthClient {

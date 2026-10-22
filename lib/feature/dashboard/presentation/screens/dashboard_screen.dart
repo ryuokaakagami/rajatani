@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../shared/cubit/cubit.dart';
 import '../../../../shared/widget/snackbar/snackbar.dart';
 import '../../data/sources/dashboard_navigation.dart';
 import '../widgets/custom_navigation_bar.dart';
@@ -21,43 +23,54 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) {
-        if (didPop) return;
+    return BlocBuilder<UserCubit, UserState>(
+      builder: (context, state) {
+        final data = state.data;
+        final avatarUrl = data?.avatarUrl;
+        final username = data?.username;
 
-        if (widget.navigationShell.currentIndex != 0) {
-          widget.navigationShell.goBranch(0);
-          return;
-        }
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) {
+            if (didPop) return;
 
-        final now = DateTime.now();
-        final isFirstBack =
-            _lastBack == null ||
-            now.difference(_lastBack!) > const Duration(seconds: 2);
+            if (widget.navigationShell.currentIndex != 0) {
+              widget.navigationShell.goBranch(0);
+              return;
+            }
 
-        if (isFirstBack) {
-          _lastBack = now;
-          context.snackBarInfo('Press back again to exit');
-          return;
-        }
+            final now = DateTime.now();
+            final isFirstBack =
+                _lastBack == null ||
+                now.difference(_lastBack!) > const Duration(seconds: 2);
 
-        SystemNavigator.pop();
-      },
+            if (isFirstBack) {
+              _lastBack = now;
+              context.snackBarInfo('Press back again to exit');
+              return;
+            }
 
-      child: HideOnScroll(
-        body: widget.navigationShell,
-        child: CustomNavigationBar(
-          selectedIndex: widget.navigationShell.currentIndex,
-          onSelected: (index) {
-            widget.navigationShell.goBranch(
-              index,
-              initialLocation: index == widget.navigationShell.currentIndex,
-            );
+            SystemNavigator.pop();
           },
-          items: DashboardNavigation.items(),
-        ),
-      ),
+
+          child: HideOnScroll(
+            body: widget.navigationShell,
+            child: CustomNavigationBar(
+              selectedIndex: widget.navigationShell.currentIndex,
+              onSelected: (index) {
+                widget.navigationShell.goBranch(
+                  index,
+                  initialLocation: index == widget.navigationShell.currentIndex,
+                );
+              },
+              items: DashboardNavigation.items(
+                avatarUrl: avatarUrl,
+                username: username,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

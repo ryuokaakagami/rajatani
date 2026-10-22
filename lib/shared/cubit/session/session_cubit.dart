@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../core/domain/use_cases/observe_session.dart';
-import '../../../core/domain/use_cases/sign_out.dart';
+import '../../../core/domain/session/use_cases/observe_session.dart';
+import '../../../core/domain/session/use_cases/sign_out.dart';
 import '../../../core/error/app_exception.dart';
 
 part 'session_state.dart';

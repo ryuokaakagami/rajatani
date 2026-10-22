@@ -9,15 +9,17 @@ import '../../../../shared/widget/image/image_viewer.dart';
 import '../../extensions/profile_photo_x.dart';
 
 class ProfilePhotoScreen extends StatelessWidget {
-  const new({super.key});
+  final String? id, avatarUrl;
+
+  const new({super.key, this.id, this.avatarUrl});
 
   @override
   Widget build(BuildContext context) {
     final scheme = Scheme.dark();
 
     return ImageViewer(
-      imageUrl: 'https://asset.kompas.com/crops/8n6IC4_F90HNnpnDUfEvrTjnuvM=/0x0:0x0/1200x800/data/photo/2023/12/06/65707bd720215.jpeg',
-      heroTag: 'profile-tag',
+      imageUrl: avatarUrl,
+      heroTag: id,
       appBar: AppBar(
         foregroundColor: scheme.onBackground,
         backgroundColor: Colors.transparent,

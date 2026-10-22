@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart';
 
 import '../../../../config/routes/routes.dart';
+import '../../../../core/domain/user/enitties/user_entity.dart';
 import '../../../../core/utils/console.dart';
 import '../../../../shared/shared.dart';
 import '../../constants/profile_string.dart';
@@ -16,26 +17,39 @@ part '../widgets/detail/_personal_section.dart';
 part '../widgets/detail/_contact_section.dart';
 
 class ProfileDetailScreen extends StatelessWidget {
-  const new({super.key});
+  final UserEntity? data;
+
+  const new({super.key, this.data});
 
   @override
   Widget build(BuildContext context) {
+    void changedPhoto() async {
+      final path = await context.pickPhotoProfile();
+      if (path == null || !context.mounted) return;
+      Console.info(message: path);
+    }
+
     return ProfileLayout(
-      titleAppBar: 'laurabas',
+      titleAppBar: data?.username,
       children: [
         _Header(
           onTapAvatar: () {
-            context.pushNamed(RoutesConstant.names.photoProfile);
+            if (data?.avatarUrl != null) {
+              context.pushNamed(
+                RoutesConstant.names.photoProfile,
+                extra: {'id': data?.id, 'avatarUrl': data?.avatarUrl},
+              );
+              return;
+            }
+            changedPhoto();
           },
-          onTapBadge: () async {
-            final path = await context.pickPhotoProfile();
-            if (path == null || !context.mounted) return;
-            Console.info(message: path);
+          onTapBadge: () {
+            changedPhoto();
           },
-          imageUrl: 'https://asset.kompas.com/crops/8n6IC4_F90HNnpnDUfEvrTjnuvM=/0x0:0x0/1200x800/data/photo/2023/12/06/65707bd720215.jpeg',
-          heroTag: 'profile-tag',
-          rating: .00,
-          totalReview: 0,
+          imageUrl: data?.avatarUrl,
+          heroTag: data?.id,
+          rating: data?.rating,
+          totalReview: data?.totalReviews,
         ),
 
         _PersonalSection(
@@ -54,11 +68,11 @@ class ProfileDetailScreen extends StatelessWidget {
           onTapBirthday: () {
             context.pushNamed(RoutesConstant.names.editBirthdayProfile);
           },
-          fullname: 'Laura Basuki',
-          username: 'laurabas',
-          bio: '-',
-          gender: 'Female',
-          birthday: DateTime(1988, 1, 9),
+          fullname: data?.fullname,
+          username: data?.username,
+          bio: data?.bio,
+          gender: data?.gender?.label,
+          birthday: data?.birthday,
         ),
 
         _ContactSection(
@@ -68,8 +82,8 @@ class ProfileDetailScreen extends StatelessWidget {
           onTapPhone: () {
             context.pushNamed(RoutesConstant.names.editPhoneProfile);
           },
-          email: 'laurabas@gmail.com',
-          phone: '08123456789',
+          email: data?.email,
+          phone: data?.phone,
         ),
       ],
     );

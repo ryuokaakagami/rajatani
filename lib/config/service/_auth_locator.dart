@@ -1,38 +1,8 @@
 part of 'locator.dart';
 
-enum AuthLocatorInstance { supabaseAuth, googleAuth, authErrorMapper }
-
-void _authLocator() {
-  _setupAuthErrorMappers();
+void _authInjection() {
   _setupSessionCore();
   _setupAuthFeature();
-}
-
-/// Menyiapkan semua mapping error secara global
-void _setupAuthErrorMappers() {
-  sl.registerLazySingleton<AppExceptionMapper>(
-    () => SupabaseAuthMapperException(),
-    instanceName: AuthLocatorInstance.supabaseAuth.name,
-  );
-
-  sl.registerLazySingleton<AppExceptionMapper>(
-    () => GoogleAuthMapperException(),
-    instanceName: AuthLocatorInstance.googleAuth.name,
-  );
-
-  sl.registerLazySingleton<AppExceptionMapper>(
-    () => CompositeExceptionMapper(
-      mappers: [
-        sl<AppExceptionMapper>(
-          instanceName: AuthLocatorInstance.supabaseAuth.name,
-        ),
-        sl<AppExceptionMapper>(
-          instanceName: AuthLocatorInstance.googleAuth.name,
-        ),
-      ],
-    ),
-    instanceName: AuthLocatorInstance.authErrorMapper.name,
-  );
 }
 
 void _setupSessionCore() {
@@ -48,7 +18,7 @@ void _setupSessionCore() {
     () => SessionRepositoryImpl(
       remote: sl<SessionRemote>(),
       exceptionMapper: sl<AppExceptionMapper>(
-        instanceName: AuthLocatorInstance.authErrorMapper.name,
+        instanceName: ErrorLocatorInstance.authErrorMapper.name,
       ),
     ),
   );
@@ -82,7 +52,7 @@ void _setupAuthFeature() {
     () => AuthRepositoryImpl(
       remote: sl<AuthRemote>(),
       exceptionMapper: sl<AppExceptionMapper>(
-        instanceName: AuthLocatorInstance.authErrorMapper.name,
+        instanceName: ErrorLocatorInstance.authErrorMapper.name,
       ),
     ),
   );

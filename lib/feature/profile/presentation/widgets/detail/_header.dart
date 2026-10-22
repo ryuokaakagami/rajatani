@@ -4,16 +4,16 @@ class _Header extends StatelessWidget {
   final VoidCallback? onTapAvatar, onTapBadge;
   final String? imageUrl;
   final Object? heroTag;
-  final double rating;
-  final int totalReview;
+  final double? rating;
+  final int? totalReview;
 
   const new({
     this.onTapAvatar,
     this.onTapBadge,
     this.imageUrl,
     this.heroTag,
-    required this.rating,
-    required this.totalReview,
+    this.rating,
+    this.totalReview,
   });
 
   @override
@@ -60,7 +60,7 @@ class _Header extends StatelessWidget {
 
             Icon(AppIcon.reviewer, color: scheme.info),
             Text(
-              totalReview.toCompact,
+              (totalReview ?? 0).toCompact,
               style: textTheme.bodyMedium?.copyWith(fontWeight: .w600),
             ),
           ],
