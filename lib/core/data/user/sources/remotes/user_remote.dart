@@ -1,5 +1,5 @@
-import '../../../../domain/user/enitties/user_entity.dart';
+import '../../models/user_model.dart';
 
 abstract class UserRemote {
-  Future<UserEntity?> fetch(String userId);
+  Future<UserModel?> fetch(String userId);
 }

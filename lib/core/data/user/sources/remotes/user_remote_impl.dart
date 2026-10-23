@@ -1,5 +1,5 @@
 import '../../../../client/database/database_client.dart';
-import '../../../../domain/user/enitties/user_entity.dart';
+import '../../models/user_model.dart';
 import 'user_remote.dart';
 
 class UserRemoteImpl implements UserRemote {
@@ -8,9 +8,9 @@ class UserRemoteImpl implements UserRemote {
   const new({required this._client});
 
   @override
-  Future<UserEntity?> fetch(String userId) async {
-    final result = await _client.read('profiles', column: 'id', value: userId);
-    if (result == null) return null;
-    return UserEntity.fromJson(result);
+  Future<UserModel?> fetch(String userId) async {
+    final json = await _client.read('profiles', column: 'id', value: userId);
+    if (json == null) return null;
+    return UserModel.fromJson(json);
   }
 }

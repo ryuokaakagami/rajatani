@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_entity.dart';
+part of 'user_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_UserEntity _$UserEntityFromJson(Map<String, dynamic> json) => _UserEntity(
+_UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
   id: json['id'] as String,
   username: json['username'] as String?,
   fullname: json['fullname'] as String?,
@@ -20,9 +20,6 @@ _UserEntity _$UserEntityFromJson(Map<String, dynamic> json) => _UserEntity(
       : DateTime.parse(json['birthday'] as String),
   rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
   totalReviews: (json['total_reviews'] as num?)?.toInt() ?? 0,
-  lastActive: json['last_active'] == null
-      ? null
-      : DateTime.parse(json['last_active'] as String),
   updatedAt: json['updated_at'] == null
       ? null
       : DateTime.parse(json['updated_at'] as String),
@@ -31,7 +28,7 @@ _UserEntity _$UserEntityFromJson(Map<String, dynamic> json) => _UserEntity(
       : DateTime.parse(json['created_at'] as String),
 );
 
-Map<String, dynamic> _$UserEntityToJson(_UserEntity instance) =>
+Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'username': instance.username,
@@ -44,7 +41,6 @@ Map<String, dynamic> _$UserEntityToJson(_UserEntity instance) =>
       'birthday': instance.birthday?.toIso8601String(),
       'rating': instance.rating,
       'total_reviews': instance.totalReviews,
-      'last_active': instance.lastActive?.toIso8601String(),
       'updated_at': instance.updatedAt?.toIso8601String(),
       'created_at': instance.createdAt?.toIso8601String(),
     };

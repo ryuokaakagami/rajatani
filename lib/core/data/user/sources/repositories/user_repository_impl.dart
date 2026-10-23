@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 
-import '../../../../domain/user/enitties/user_entity.dart';
+import '../../../../domain/user/entities/user_entity.dart';
 import '../../../../domain/user/repositories/user_repository.dart';
 import '../../../../error/app_exception.dart';
 import '../../../../error/mapper/app_exception_mapper.dart';
@@ -16,7 +16,7 @@ class UserRepositoryImpl with SafeCall implements UserRepository {
   @override
   Future<Either<AppException, UserEntity?>> fetch(String userId) {
     return call(
-      doAction: () => _remote.fetch(userId),
+      doAction: () async => (await _remote.fetch(userId))?.toEntity(),
       customErrorHandler: _exceptionMapper.map,
     );
   }

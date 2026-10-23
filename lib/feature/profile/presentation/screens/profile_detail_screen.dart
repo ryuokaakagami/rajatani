@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart';
 
 import '../../../../config/routes/routes.dart';
-import '../../../../core/domain/user/enitties/user_entity.dart';
+import '../../../../core/domain/user/entities/user_entity.dart';
 import '../../../../core/utils/console.dart';
 import '../../../../shared/shared.dart';
 import '../../constants/profile_string.dart';
