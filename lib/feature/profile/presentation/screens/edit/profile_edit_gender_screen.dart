@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../core/utils/console.dart';
+import '../../../../../core/domain/user/enums/gender.dart';
 import '../../../../../shared/constant/constant.dart';
 import '../../../../../shared/validator/rules/required_validator.dart';
 import '../../../../../shared/widget/widget.dart';
 import '../../../constants/profile_string.dart';
-import '../../../data/enum/gender.dart';
+import '../../../data/models/profile_update.dart';
 import '../../../extensions/gender_sheet_x.dart';
+import '../../../extensions/profile_edit_x.dart';
+import '../../cubit/edit/profile_edit_cubit.dart';
 import '../../widgets/profile_edit_layout.dart';
 
 class ProfileEditGenderScreen extends StatefulWidget {
-  const new({super.key});
+  final String? id;
+  final Gender? gender;
+
+  const new({super.key, this.id, this.gender});
 
   @override
   State<ProfileEditGenderScreen> createState() =>
@@ -18,21 +24,38 @@ class ProfileEditGenderScreen extends StatefulWidget {
 }
 
 class _ProfileEditGenderScreenState extends State<ProfileEditGenderScreen> {
-  final _controller = TextEditingController();
-  late final _notifier = ValueNotifier<Gender?>(null);
+  String? get _id => widget.id;
+  Gender? get _gender => widget.gender;
+
+  late final TextEditingController _controller;
+  late final ValueNotifier<Gender?> _notifier;
 
   final _key = GlobalKey<FormState>();
   final _validator = RequiredValidator(
     fieldName: ProfileString.detail.genderMenu,
   );
 
+  @override
+  void initState() {
+    super.initState();
+    _notifier = ValueNotifier<Gender?>(_gender);
+    _controller = TextEditingController(text: _gender?.label ?? '');
+  }
+
   void _handleSaved() {
-    final isValid = _key.currentState?.validate() ?? false;
-    if (!isValid) return;
+    final isValidate = _key.currentState?.validate() ?? false;
+    final gender = _notifier.value;
 
-    final Gender? gender = _notifier.value;
+    final isChanged = gender != widget.gender;
+    final isValid = isValidate && isChanged;
 
-    Console.info(message: gender?.label ?? '');
+    final cubit = context.read<ProfileEditCubit>();
+
+    if (isValid) {
+      final newData = ProfileUpdate(gender: gender);
+
+      cubit.update(userId: _id ?? '', data: newData);
+    }
   }
 
   Future<void> _showBottomSheet() async {
@@ -54,20 +77,28 @@ class _ProfileEditGenderScreenState extends State<ProfileEditGenderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ProfileEditLayout(
-      formKey: _key,
-      onPressed: _handleSaved,
-      field: AppField(
-        onTap: _showBottomSheet,
-        onSubmitted: (_) => _handleSaved(),
-        controller: _controller,
-        validator: _validator.validate,
-        prefixIcon: Icon(AppIcon.gender),
-        hintText: ProfileString.edit.genderHint,
-        readOnly: true,
-      ),
-      title: ProfileString.detail.genderMenu,
-      textInfo: ProfileString.edit.genderHelper,
+    return BlocConsumer<ProfileEditCubit, ProfileEditState>(
+      listener: (context, state) {
+        context.handleProfileEditState(state: state, userId: _id ?? '');
+      },
+      builder: (context, state) {
+        return ProfileEditLayout(
+          formKey: _key,
+          onPressed: _handleSaved,
+          isLoading: state.isLoading,
+          field: AppField(
+            onTap: _showBottomSheet,
+            onSubmitted: (_) => _handleSaved(),
+            controller: _controller,
+            validator: _validator.validate,
+            prefixIcon: Icon(AppIcon.gender),
+            hintText: ProfileString.edit.genderHint,
+            readOnly: true,
+          ),
+          title: ProfileString.detail.genderMenu,
+          textInfo: ProfileString.edit.genderHelper,
+        );
+      },
     );
   }
 }

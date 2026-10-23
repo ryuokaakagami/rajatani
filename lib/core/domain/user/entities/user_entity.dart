@@ -22,5 +22,6 @@ abstract class UserEntity with _$UserEntity {
     @Default(0) int totalReviews,
     DateTime? updatedAt,
     DateTime? createdAt,
+    DateTime? usernameUpdatedAt,
   }) = _UserEntity;
 }

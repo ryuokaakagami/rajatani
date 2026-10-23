@@ -26,6 +26,9 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
   createdAt: json['created_at'] == null
       ? null
       : DateTime.parse(json['created_at'] as String),
+  usernameUpdatedAt: json['username_updated_at'] == null
+      ? null
+      : DateTime.parse(json['username_updated_at'] as String),
 );
 
 Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
@@ -43,10 +46,11 @@ Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
       'total_reviews': instance.totalReviews,
       'updated_at': instance.updatedAt?.toIso8601String(),
       'created_at': instance.createdAt?.toIso8601String(),
+      'username_updated_at': instance.usernameUpdatedAt?.toIso8601String(),
     };
 
 const _$GenderEnumMap = {
   Gender.male: 'male',
   Gender.female: 'female',
-  Gender.notToSay: 'notToSay',
+  Gender.notToSay: 'not_to_say',
 };

@@ -1,31 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../core/utils/console.dart';
-import '../../../../../shared/constant/constant.dart';
-import '../../../../../shared/extension/extension.dart';
-import '../../../../../shared/validator/rules/required_validator.dart';
-import '../../../../../shared/widget/widget.dart';
+import '../../../../../shared/shared.dart';
 import '../../../constants/profile_string.dart';
+import '../../../data/models/profile_update.dart';
+import '../../../extensions/profile_edit_x.dart';
+import '../../cubit/edit/profile_edit_cubit.dart';
 import '../../widgets/profile_edit_layout.dart';
 
 class ProfileEditNameScreen extends StatefulWidget {
-  const new({super.key});
+  final String? id, name;
+
+  const new({super.key, this.id, this.name});
 
   @override
   State<ProfileEditNameScreen> createState() => _ProfileEditNameScreenState();
 }
 
 class _ProfileEditNameScreenState extends State<ProfileEditNameScreen> {
-  final _controller = TextEditingController();
+  String? get _name => widget.name;
+  String? get _id => widget.id;
+
+  late final TextEditingController _controller;
   final _key = GlobalKey<FormState>();
   final _validator = RequiredValidator(
     fieldName: ProfileString.detail.nameMenu,
   );
 
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: _name);
+  }
+
   void _handleSaved() {
-    final isValid = _key.currentState?.validate() ?? false;
-    if (isValid) Console.info(message: _controller.text.toCleanSpace);
+    final isValidate = _key.currentState?.validate() ?? false;
+    final name = _controller.text.toCleanSpace;
+    final isChanged = _name?.toCleanSpace != name;
+    final isValid = isValidate && isChanged;
+
+    final cubit = context.read<ProfileEditCubit>();
+
+    if (isValid) {
+      final newData = ProfileUpdate(fullname: name);
+      cubit.update(userId: _id ?? '', data: newData);
+    }
   }
 
   @override
@@ -36,19 +56,27 @@ class _ProfileEditNameScreenState extends State<ProfileEditNameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ProfileEditLayout(
-      formKey: _key,
-      onPressed: _handleSaved,
-      field: AppField(
-        onSubmitted: (_) => _handleSaved(),
-        controller: _controller,
-        validator: _validator.validate,
-        prefixIcon: Icon(AppIcon.user),
-        hintText: ProfileString.edit.nameHint,
-        formatters: [LengthLimitingTextInputFormatter(50)],
-      ),
-      title: ProfileString.detail.nameMenu,
-      textInfo: ProfileString.edit.nameHelper,
+    return BlocConsumer<ProfileEditCubit, ProfileEditState>(
+      listener: (context, state) {
+        context.handleProfileEditState(state: state, userId: _id ?? '');
+      },
+      builder: (context, state) {
+        return ProfileEditLayout(
+          formKey: _key,
+          onPressed: _handleSaved,
+          isLoading: state.isLoading,
+          field: AppField(
+            onSubmitted: (_) => _handleSaved(),
+            controller: _controller,
+            validator: _validator.validate,
+            prefixIcon: Icon(AppIcon.user),
+            hintText: ProfileString.edit.nameHint,
+            formatters: [LengthLimitingTextInputFormatter(50)],
+          ),
+          title: ProfileString.detail.nameMenu,
+          textInfo: ProfileString.edit.nameHelper,
+        );
+      },
     );
   }
 }

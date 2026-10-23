@@ -24,6 +24,7 @@ abstract class UserModel with _$UserModel {
     @JsonKey(name: 'total_reviews') @Default(0) int totalReviews,
     @JsonKey(name: 'updated_at') DateTime? updatedAt,
     @JsonKey(name: 'created_at') DateTime? createdAt,
+    @JsonKey(name: 'username_updated_at') DateTime? usernameUpdatedAt,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
@@ -43,6 +44,7 @@ abstract class UserModel with _$UserModel {
     totalReviews: totalReviews,
     updatedAt: updatedAt,
     createdAt: createdAt,
+    usernameUpdatedAt: usernameUpdatedAt,
   );
 
   factory UserModel.fromEntity(UserEntity e) => UserModel(
@@ -59,5 +61,6 @@ abstract class UserModel with _$UserModel {
     totalReviews: e.totalReviews,
     updatedAt: e.updatedAt,
     createdAt: e.createdAt,
+    usernameUpdatedAt: e.usernameUpdatedAt,
   );
 }

@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart';
 
 import '../../../../config/routes/constants/routes_constant.dart';
-import '../../../../core/core.dart';
 import '../../../../shared/shared.dart';
 import '../../constants/profile_string.dart';
 import '../widgets/card_create_store.dart';
@@ -23,8 +22,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void onTapDetailProfile(UserEntity? data) {
-      context.pushNamed(RoutesConstant.names.detailProfile, extra: data);
+    void onTapDetailProfile() {
+      context.pushNamed(RoutesConstant.names.detailProfile);
     }
 
     return BlocBuilder<UserCubit, UserState>(
@@ -33,7 +32,7 @@ class ProfileScreen extends StatelessWidget {
         return ProfileLayout(
           children: [
             _Header(
-              onTapAvatar: () => onTapDetailProfile(data),
+              onTapAvatar: onTapDetailProfile,
               imageUrl: data?.avatarUrl,
               fullname: data?.fullname,
               username: data?.username,
@@ -41,7 +40,7 @@ class ProfileScreen extends StatelessWidget {
             ),
 
             _AccountSection(
-              onTapDetail: () => onTapDetailProfile(data),
+              onTapDetail: onTapDetailProfile,
               onTapDelivery: () {},
               onTapPrivacy: () {},
             ),

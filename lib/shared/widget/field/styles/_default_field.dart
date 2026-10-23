@@ -1,7 +1,7 @@
 part of '../field.dart';
 
 class _DefaultField extends StatelessWidget {
-  final ValueChanged<String?>? onSubmitted;
+  final ValueChanged<String?>? onSubmitted, onChanged;
   final VoidCallback? onTap;
   final bool isLoading, isDisabled, readOnly;
   final TextEditingController? controller;
@@ -9,13 +9,14 @@ class _DefaultField extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextInputAction? inputAction;
   final TextInputType? type;
-  final String? hintText, label;
+  final String? hintText, label, errorText;
   final int? minLines, maxLines, maxLength;
   final Widget? prefixIcon, suffixIcon;
   final List<TextInputFormatter>? formatters;
 
   const new({
     this.onSubmitted,
+    this.onChanged,
     this.onTap,
     required this.isLoading,
     required this.isDisabled,
@@ -27,6 +28,7 @@ class _DefaultField extends StatelessWidget {
     this.type,
     this.hintText,
     this.label,
+    this.errorText,
     this.minLines,
     this.maxLines,
     this.maxLength,
@@ -45,6 +47,7 @@ class _DefaultField extends StatelessWidget {
 
     final textField = TextFormField(
       onFieldSubmitted: handleSubmit,
+      onChanged: onChanged,
       onTap: onTap,
       controller: controller,
       focusNode: focusNode,
@@ -63,6 +66,7 @@ class _DefaultField extends StatelessWidget {
         suffixIcon: isLoading
             ? SizedBox(width: IconSize.xs, child: AppLoading())
             : suffixIcon,
+        errorText: errorText,
       ),
     );
 

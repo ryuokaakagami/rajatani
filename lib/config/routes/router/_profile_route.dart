@@ -19,7 +19,7 @@ final _profileRoute = StatefulShellBranch(
           pageBuilder: (context, state) {
             return transitionPage(
               key: state.pageKey,
-              child: ProfileDetailScreen(data: state.extra as UserEntity?),
+              child: const ProfileDetailScreen(),
             );
           },
           routes: [
@@ -30,8 +30,8 @@ final _profileRoute = StatefulShellBranch(
               pageBuilder: (context, state) {
                 final extra = state.extra as Map<String, dynamic>?;
 
-                final id = extra?['id'] as String? ?? '';
-                final avatarUrl = extra?['avatarUrl'] as String? ?? '';
+                final id = extra?['id'] as String?;
+                final avatarUrl = extra?['avatarUrl'] as String?;
                 return transitionPage(
                   key: state.pageKey,
                   child: ProfilePhotoScreen(id: id, avatarUrl: avatarUrl),
@@ -53,9 +53,16 @@ final _profileRoute = StatefulShellBranch(
                   path: RoutesConstant.paths.name,
                   name: RoutesConstant.names.editNameProfile,
                   pageBuilder: (context, state) {
+                    final extra = state.extra as Map<String, dynamic>?;
+
+                    final id = extra?['id'] as String?;
+                    final name = extra?['name'] as String?;
                     return transitionPage(
                       key: state.pageKey,
-                      child: const ProfileEditNameScreen(),
+                      child: BlocProvider(
+                        create: (_) => sl<ProfileEditCubit>(),
+                        child: ProfileEditNameScreen(id: id, name: name),
+                      ),
                     );
                   },
                 ),
@@ -65,9 +72,27 @@ final _profileRoute = StatefulShellBranch(
                   path: RoutesConstant.paths.username,
                   name: RoutesConstant.names.editUsernameProfile,
                   pageBuilder: (context, state) {
+                    final extra = state.extra as Map<String, dynamic>?;
+
+                    final id = extra?['id'] as String?;
+                    final username = extra?['username'] as String?;
+                    final usernameUpdatedAt =
+                        extra?['username_updated_at'] as DateTime?;
                     return transitionPage(
                       key: state.pageKey,
-                      child: const ProfileEditUserNameScreen(),
+                      child: MultiBlocProvider(
+                        providers: [
+                          BlocProvider(create: (_) => sl<ProfileEditCubit>()),
+                          BlocProvider(
+                            create: (context) => sl<CheckUsernameCubit>(),
+                          ),
+                        ],
+                        child: ProfileEditUserNameScreen(
+                          id: id,
+                          username: username,
+                          usernameUpdatedAt: usernameUpdatedAt,
+                        ),
+                      ),
                     );
                   },
                 ),
@@ -77,9 +102,16 @@ final _profileRoute = StatefulShellBranch(
                   path: RoutesConstant.paths.bio,
                   name: RoutesConstant.names.editBioProfile,
                   pageBuilder: (context, state) {
+                    final extra = state.extra as Map<String, dynamic>?;
+
+                    final id = extra?['id'] as String?;
+                    final bio = extra?['bio'] as String?;
                     return transitionPage(
                       key: state.pageKey,
-                      child: const ProfileEditBioScreen(),
+                      child: BlocProvider(
+                        create: (_) => sl<ProfileEditCubit>(),
+                        child: ProfileEditBioScreen(id: id, bio: bio),
+                      ),
                     );
                   },
                 ),
@@ -89,9 +121,16 @@ final _profileRoute = StatefulShellBranch(
                   path: RoutesConstant.paths.gender,
                   name: RoutesConstant.names.editGenderProfile,
                   pageBuilder: (context, state) {
+                    final extra = state.extra as Map<String, dynamic>?;
+
+                    final id = extra?['id'] as String?;
+                    final gender = extra?['gender'] as Gender?;
                     return transitionPage(
                       key: state.pageKey,
-                      child: const ProfileEditGenderScreen(),
+                      child: BlocProvider(
+                        create: (_) => sl<ProfileEditCubit>(),
+                        child: ProfileEditGenderScreen(id: id, gender: gender),
+                      ),
                     );
                   },
                 ),
@@ -101,9 +140,19 @@ final _profileRoute = StatefulShellBranch(
                   path: RoutesConstant.paths.birthday,
                   name: RoutesConstant.names.editBirthdayProfile,
                   pageBuilder: (context, state) {
+                    final extra = state.extra as Map<String, dynamic>?;
+
+                    final id = extra?['id'] as String?;
+                    final birthday = extra?['birthday'] as DateTime?;
                     return transitionPage(
                       key: state.pageKey,
-                      child: const ProfileEditBirthdayScreen(),
+                      child: BlocProvider(
+                        create: (_) => sl<ProfileEditCubit>(),
+                        child: ProfileEditBirthdayScreen(
+                          id: id,
+                          birthday: birthday,
+                        ),
+                      ),
                     );
                   },
                 ),

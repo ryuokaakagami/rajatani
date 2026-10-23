@@ -15,6 +15,18 @@ export 'presentation/widgets/profile_section.dart';
 export 'presentation/widgets/card_create_store.dart';
 export 'presentation/widgets/profile_avatar.dart';
 
+export 'presentation/cubit/edit/profile_edit_cubit.dart';
+export 'presentation/cubit/username/check_username_cubit.dart';
+
+export 'data/models/profile_update.dart';
+export 'data/sources/remotes/profile_remote.dart';
+export 'data/sources/remotes/profile_remote_impl.dart';
+export 'data/sources/repositories/profile_repository_impl.dart';
+
+export 'domain/repositories/profile_repository.dart';
+export 'domain/use_cases/update_data_profile.dart';
+export 'domain/use_cases/check_username_available.dart';
+
 export 'extensions/birthday_sheet_x.dart';
 export 'extensions/gender_sheet_x.dart';
 export 'extensions/gender_x.dart';

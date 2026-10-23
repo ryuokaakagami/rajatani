@@ -1,7 +1,7 @@
 part of 'field.dart';
 
 class AppField extends StatelessWidget {
-  final ValueChanged<String?>? onSubmitted;
+  final ValueChanged<String?>? onSubmitted, onChanged;
   final VoidCallback? onTap;
   final bool isLoading, isDisabled, readOnly, isDefault;
   final TextEditingController? controller;
@@ -9,7 +9,7 @@ class AppField extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextInputAction? inputAction;
   final TextInputType? type;
-  final String? hintText, label;
+  final String? hintText, label, errorText;
   final int? minLines, maxLines, maxLength;
   final Widget? prefixIcon, suffixIcon;
   final List<TextInputFormatter>? formatters;
@@ -17,6 +17,7 @@ class AppField extends StatelessWidget {
   const new({
     super.key,
     this.onSubmitted,
+    this.onChanged,
     this.onTap,
     this.isLoading = false,
     this.isDisabled = false,
@@ -28,6 +29,7 @@ class AppField extends StatelessWidget {
     this.type,
     this.hintText,
     this.label,
+    this.errorText,
     this.minLines,
     this.maxLines,
     this.maxLength,
@@ -42,7 +44,8 @@ class AppField extends StatelessWidget {
     this.isDisabled = false,
     this.controller,
     this.validator,
-  }) : isLoading = false,
+  }) : onChanged = null,
+       isLoading = false,
        isDefault = false,
        readOnly = false,
        onTap = null,
@@ -51,6 +54,7 @@ class AppField extends StatelessWidget {
        type = null,
        hintText = null,
        label = null,
+       errorText = null,
        minLines = null,
        maxLines = null,
        maxLength = null,
@@ -63,6 +67,7 @@ class AppField extends StatelessWidget {
     if (isDefault) {
       return _DefaultField(
         onSubmitted: onSubmitted,
+        onChanged: onChanged,
         onTap: onTap,
         isLoading: isLoading,
         isDisabled: isDisabled,
@@ -74,6 +79,7 @@ class AppField extends StatelessWidget {
         type: type,
         hintText: hintText,
         label: label,
+        errorText: errorText,
         minLines: minLines,
         maxLines: maxLines,
         maxLength: maxLength,

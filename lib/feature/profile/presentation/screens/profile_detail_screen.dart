@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart';
 
 import '../../../../config/routes/routes.dart';
-import '../../../../core/domain/user/entities/user_entity.dart';
 import '../../../../core/utils/console.dart';
 import '../../../../shared/shared.dart';
 import '../../constants/profile_string.dart';
@@ -17,9 +17,7 @@ part '../widgets/detail/_personal_section.dart';
 part '../widgets/detail/_contact_section.dart';
 
 class ProfileDetailScreen extends StatelessWidget {
-  final UserEntity? data;
-
-  const new({super.key, this.data});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,63 +27,87 @@ class ProfileDetailScreen extends StatelessWidget {
       Console.info(message: path);
     }
 
-    return ProfileLayout(
-      titleAppBar: data?.username,
-      children: [
-        _Header(
-          onTapAvatar: () {
-            if (data?.avatarUrl != null) {
-              context.pushNamed(
-                RoutesConstant.names.photoProfile,
-                extra: {'id': data?.id, 'avatarUrl': data?.avatarUrl},
-              );
-              return;
-            }
-            changedPhoto();
-          },
-          onTapBadge: () {
-            changedPhoto();
-          },
-          imageUrl: data?.avatarUrl,
-          heroTag: data?.id,
-          rating: data?.rating,
-          totalReview: data?.totalReviews,
-        ),
+    return BlocBuilder<UserCubit, UserState>(
+      builder: (context, state) {
+        final data = state.data;
+        return ProfileLayout(
+          titleAppBar: data?.username,
+          children: [
+            _Header(
+              onTapAvatar: () {
+                if (data?.avatarUrl != null) {
+                  context.pushNamed(
+                    RoutesConstant.names.photoProfile,
+                    extra: {'id': data?.id, 'avatarUrl': data?.avatarUrl},
+                  );
+                  return;
+                }
+                changedPhoto();
+              },
+              onTapBadge: () {
+                changedPhoto();
+              },
+              imageUrl: data?.avatarUrl,
+              heroTag: data?.id,
+              rating: data?.rating,
+              totalReview: data?.totalReviews,
+            ),
 
-        _PersonalSection(
-          onTapFullname: () {
-            context.pushNamed(RoutesConstant.names.editNameProfile);
-          },
-          onTapUsername: () {
-            context.pushNamed(RoutesConstant.names.editUsernameProfile);
-          },
-          onTapBio: () {
-            context.pushNamed(RoutesConstant.names.editBioProfile);
-          },
-          onTapGender: () {
-            context.pushNamed(RoutesConstant.names.editGenderProfile);
-          },
-          onTapBirthday: () {
-            context.pushNamed(RoutesConstant.names.editBirthdayProfile);
-          },
-          fullname: data?.fullname,
-          username: data?.username,
-          bio: data?.bio,
-          gender: data?.gender?.label,
-          birthday: data?.birthday,
-        ),
+            _PersonalSection(
+              onTapFullname: () {
+                context.pushNamed(
+                  RoutesConstant.names.editNameProfile,
+                  extra: {'id': data?.id, 'name': data?.fullname},
+                );
+              },
+              onTapUsername: () {
+                context.pushNamed(
+                  RoutesConstant.names.editUsernameProfile,
+                  extra: {
+                    'id': data?.id,
+                    'username': data?.username,
+                    'username_updated_at': data?.usernameUpdatedAt,
+                  },
+                );
+              },
+              onTapBio: () {
+                context.pushNamed(
+                  RoutesConstant.names.editBioProfile,
+                  extra: {'id': data?.id, 'bio': data?.bio},
+                );
+              },
+              onTapGender: () {
+                context.pushNamed(
+                  RoutesConstant.names.editGenderProfile,
+                  extra: {'id': data?.id, 'gender': data?.gender},
+                );
+              },
+              onTapBirthday: () {
+                context.pushNamed(
+                  RoutesConstant.names.editBirthdayProfile,
+                  extra: {'id': data?.id, 'birthday': data?.birthday},
+                );
+              },
+              fullname: data?.fullname,
+              username: data?.username,
+              bio: data?.bio,
+              gender: data?.gender?.label,
+              birthday: data?.birthday,
+            ),
 
-        _ContactSection(
-          onTapEmail: () {
-            context.pushNamed(RoutesConstant.names.editEmailProfile);
-          },
-          onTapPhone: () {
-            context.pushNamed(RoutesConstant.names.editPhoneProfile);
-          },
-          email: data?.email,
-          phone: data?.phone,
-        ),
-      ],
+            _ContactSection(
+              onTapEmail: () {
+                context.pushNamed(RoutesConstant.names.editEmailProfile);
+              },
+              onTapPhone: () {
+                context.pushNamed(RoutesConstant.names.editPhoneProfile);
+              },
+              email: data?.email,
+              phone: data?.phone,
+            ),
+          ],
+        );
+      },
     );
   }
 }

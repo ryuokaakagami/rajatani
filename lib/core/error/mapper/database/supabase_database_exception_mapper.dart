@@ -4,13 +4,20 @@ import '../../app_exception.dart';
 import '../app_exception_mapper.dart';
 
 class SupabaseDatabaseExceptionMapper implements AppExceptionMapper {
-  const new();
+  const SupabaseDatabaseExceptionMapper();
 
   @override
   AppException? map(Object e) {
     if (e is! PostgrestException) return null;
 
     return switch (e.code) {
+      // --- Custom Username Exceptions ---
+      'USN01' => UsernameTooShortException(),
+      'USN02' => UsernameAlreadyExistsException(),
+      'USN03' => UsernameCooldownException(),
+      'USN04' => UsernameInvalidCharactersException(),
+
+      // --- Standard Database Exceptions ---
       '23505' => const DatabaseDuplicateException(),
       '23503' => const DatabaseReferenceException(),
       '23502' || '23514' || '22P02' => const DatabaseInvalidDataException(),

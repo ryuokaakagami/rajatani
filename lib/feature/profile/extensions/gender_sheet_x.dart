@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/domain/user/enums/gender.dart';
 import '../../../shared/constant/spacing_size.dart';
 import '../../../shared/theme/app_theme.dart';
 import '../../../shared/widget/bottom_sheet/sheet_x.dart';
-import '../data/enum/gender.dart';
 import 'gender_x.dart';
 
 extension GenderSheetX on BuildContext {

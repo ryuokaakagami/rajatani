@@ -8,9 +8,10 @@ import '../../feature/feature.dart';
 import '../../shared/shared.dart';
 
 part '_clients_locator.dart';
+part '_error_mapper_locator.dart';
 part '_auth_locator.dart';
 part '_user_locator.dart';
-part '_error_mapper_locator.dart';
+part '_profile_locator.dart';
 
 final sl = GetIt.instance;
 
@@ -20,6 +21,7 @@ void initLocator() {
   _clientInjection();
   _authInjection();
   _userInjection();
+  _profileInjection();
 }
 
 void _mediaInjection() {

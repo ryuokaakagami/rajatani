@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../core/utils/console.dart';
 import '../../../../../shared/constant/constant.dart';
 import '../../../../../shared/extension/extension.dart';
 import '../../../../../shared/validator/rules/required_validator.dart';
 import '../../../../../shared/widget/widget.dart';
 import '../../../constants/profile_string.dart';
+import '../../../data/models/profile_update.dart';
 import '../../../extensions/birthday_sheet_x.dart';
+import '../../../extensions/profile_edit_x.dart';
+import '../../cubit/edit/profile_edit_cubit.dart';
 import '../../widgets/profile_edit_layout.dart';
 
 class ProfileEditBirthdayScreen extends StatefulWidget {
-  const new({super.key});
+  final String? id;
+  final DateTime? birthday;
+
+  const new({super.key, this.id, this.birthday});
 
   @override
   State<ProfileEditBirthdayScreen> createState() =>
@@ -18,23 +24,38 @@ class ProfileEditBirthdayScreen extends StatefulWidget {
 }
 
 class _ProfileEditBirthdayScreenState extends State<ProfileEditBirthdayScreen> {
-  final _controller = TextEditingController();
-  late final _notifier = ValueNotifier<DateTime?>(null);
+  String? get _id => widget.id;
+  DateTime? get _birthday => widget.birthday;
+
+  late final TextEditingController _controller;
+  late final ValueNotifier<DateTime?> _notifier;
 
   final _key = GlobalKey<FormState>();
   final _validator = RequiredValidator(
     fieldName: ProfileString.detail.birthdayMenu,
   );
 
+  @override
+  void initState() {
+    super.initState();
+    _notifier = ValueNotifier<DateTime?>(_birthday);
+    _controller = TextEditingController(text: _birthday?.toFormat ?? '');
+  }
+
   void _handleSaved() {
-    final isValid = _key.currentState?.validate() ?? false;
-    if (!isValid) return;
+    final isValidate = _key.currentState?.validate() ?? false;
+    final birthday = _notifier.value;
+    final isChanged = birthday != _birthday;
 
-    final DateTime? birthday = _notifier.value;
+    final isValid = isValidate && isChanged;
 
-    final formattedBirthday = birthday?.toIso8601String() ?? '';
+    final cubit = context.read<ProfileEditCubit>();
 
-    Console.info(message: formattedBirthday);
+    if (isValid) {
+      final newData = ProfileUpdate(birthday: birthday);
+
+      cubit.update(userId: _id ?? '', data: newData);
+    }
   }
 
   Future<void> _showSheetBirthday() async {
@@ -44,7 +65,7 @@ class _ProfileEditBirthdayScreenState extends State<ProfileEditBirthdayScreen> {
     if (!mounted || date == null) return;
 
     _notifier.value = date;
-    _controller.text = date.toFormat;
+    _controller.text = date.toFormat ?? '';
   }
 
   @override
@@ -56,20 +77,28 @@ class _ProfileEditBirthdayScreenState extends State<ProfileEditBirthdayScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ProfileEditLayout(
-      formKey: _key,
-      onPressed: _handleSaved,
-      field: AppField(
-        onTap: _showSheetBirthday,
-        onSubmitted: (_) => _handleSaved(),
-        controller: _controller,
-        validator: _validator.validate,
-        prefixIcon: Icon(AppIcon.calendar),
-        hintText: ProfileString.edit.birthdayHint,
-        readOnly: true,
-      ),
-      title: ProfileString.detail.birthdayMenu,
-      textInfo: ProfileString.edit.birthdayHelper,
+    return BlocConsumer<ProfileEditCubit, ProfileEditState>(
+      listener: (context, state) {
+        context.handleProfileEditState(state: state, userId: _id ?? '');
+      },
+      builder: (context, state) {
+        return ProfileEditLayout(
+          formKey: _key,
+          onPressed: _handleSaved,
+          isLoading: state.isLoading,
+          field: AppField(
+            onTap: _showSheetBirthday,
+            onSubmitted: (_) => _handleSaved(),
+            controller: _controller,
+            validator: _validator.validate,
+            prefixIcon: Icon(AppIcon.calendar),
+            hintText: ProfileString.edit.birthdayHint,
+            readOnly: true,
+          ),
+          title: ProfileString.detail.birthdayMenu,
+          textInfo: ProfileString.edit.birthdayHelper,
+        );
+      },
     );
   }
 }

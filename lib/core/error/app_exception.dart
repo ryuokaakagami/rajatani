@@ -11,3 +11,7 @@ abstract class AppException {
 class UnknownException extends AppException {
   const new() : super(message: 'Something went wrong. Please try again.');
 }
+
+abstract class UsernameException extends AppException {
+  const UsernameException({required super.message});
+}

@@ -1,23 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../core/utils/console.dart';
-import '../../../../../shared/constant/constant.dart';
-import '../../../../../shared/widget/widget.dart';
+import '../../../../../shared/shared.dart';
 import '../../../constants/profile_string.dart';
+import '../../../data/models/profile_update.dart';
+import '../../../extensions/profile_edit_x.dart';
+import '../../cubit/edit/profile_edit_cubit.dart';
 import '../../widgets/profile_edit_layout.dart';
 
 class ProfileEditBioScreen extends StatefulWidget {
-  const new({super.key});
+  final String? id, bio;
+
+  const new({super.key, this.id, this.bio});
 
   @override
   State<ProfileEditBioScreen> createState() => _ProfileEditBioScreenState();
 }
 
 class _ProfileEditBioScreenState extends State<ProfileEditBioScreen> {
-  final _controller = TextEditingController();
+  String? get _bio => widget.bio;
+  String? get _id => widget.id;
+
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: _bio);
+  }
 
   void _handleSaved() {
-    Console.info(message: _controller.text.trim());
+    final bio = _controller.text.toCleanSpace;
+    final isChanged = _bio?.toCleanSpace != bio;
+
+    final cubit = context.read<ProfileEditCubit>();
+    if (isChanged) {
+      final newData = ProfileUpdate(bio: bio);
+      cubit.update(userId: _id ?? '', data: newData);
+    }
   }
 
   @override
@@ -28,19 +48,27 @@ class _ProfileEditBioScreenState extends State<ProfileEditBioScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ProfileEditLayout(
-      onPressed: _handleSaved,
-      field: AppField(
-        onSubmitted: (_) => _handleSaved(),
-        controller: _controller,
-        prefixIcon: Icon(AppIcon.info),
-        hintText: ProfileString.edit.bioHint,
-        maxLines: 5,
-        minLines: 1,
-        maxLength: 250,
-      ),
-      title: ProfileString.detail.bioMenu,
-      textInfo: ProfileString.edit.bioHelper,
+    return BlocConsumer<ProfileEditCubit, ProfileEditState>(
+      listener: (context, state) {
+        context.handleProfileEditState(state: state, userId: _id ?? '');
+      },
+      builder: (context, state) {
+        return ProfileEditLayout(
+          onPressed: _handleSaved,
+          isLoading: state.isLoading,
+          field: AppField(
+            onSubmitted: (_) => _handleSaved(),
+            controller: _controller,
+            prefixIcon: Icon(AppIcon.info),
+            hintText: ProfileString.edit.bioHint,
+            maxLines: 5,
+            minLines: 1,
+            maxLength: 250,
+          ),
+          title: ProfileString.detail.bioMenu,
+          textInfo: ProfileString.edit.bioHelper,
+        );
+      },
     );
   }
 }
