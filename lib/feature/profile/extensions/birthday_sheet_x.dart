@@ -8,14 +8,15 @@ import '../../../shared/widget/button/button.dart';
 extension BirthdaySheetX on BuildContext {
   Future<DateTime?> showBirthdaySheetSelector({DateTime? current}) {
     final now = DateTime.now();
-    var selected = current ?? DateTime(now.year - 18, now.month, now.day);
+    final initial = current ?? DateTime(now.year - 18, now.month, now.day);
+    DateTime? selected = current;
 
     return showAppBottomSheet(
       builder: (context) => [
         SizedBox(
           height: 300.0,
           child: CalendarDatePicker(
-            initialDate: selected,
+            initialDate: initial,
             firstDate: DateTime(1900),
             lastDate: now,
             initialCalendarMode: .year,

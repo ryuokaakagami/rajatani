@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart';
 
-import '../../../core/core.dart';
 import '../../../feature/feature.dart';
 import '../../../shared/shared.dart';
 import '../../service/locator.dart';

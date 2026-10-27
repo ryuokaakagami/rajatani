@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/domain/user/entities/user_entity.dart';
 import '../../../../../shared/shared.dart';
 import '../../../constants/profile_string.dart';
 import '../../../data/models/profile_update.dart';
@@ -9,17 +10,16 @@ import '../../cubit/edit/profile_edit_cubit.dart';
 import '../../widgets/profile_edit_layout.dart';
 
 class ProfileEditBioScreen extends StatefulWidget {
-  final String? id, bio;
-
-  const new({super.key, this.id, this.bio});
+  const new({super.key});
 
   @override
   State<ProfileEditBioScreen> createState() => _ProfileEditBioScreenState();
 }
 
 class _ProfileEditBioScreenState extends State<ProfileEditBioScreen> {
-  String? get _bio => widget.bio;
-  String? get _id => widget.id;
+  late final UserEntity _user = context.read<UserCubit>().state.data!;
+  String get _id => _user.id;
+  String? get _bio => _user.bio;
 
   late final TextEditingController _controller;
 
@@ -36,7 +36,7 @@ class _ProfileEditBioScreenState extends State<ProfileEditBioScreen> {
     final cubit = context.read<ProfileEditCubit>();
     if (isChanged) {
       final newData = ProfileUpdate(bio: bio);
-      cubit.update(userId: _id ?? '', data: newData);
+      cubit.update(userId: _id, data: newData);
     }
   }
 
@@ -50,7 +50,7 @@ class _ProfileEditBioScreenState extends State<ProfileEditBioScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<ProfileEditCubit, ProfileEditState>(
       listener: (context, state) {
-        context.handleProfileEditState(state: state, userId: _id ?? '');
+        context.handleProfileEditState(state: state, userId: _id);
       },
       builder: (context, state) {
         return ProfileEditLayout(

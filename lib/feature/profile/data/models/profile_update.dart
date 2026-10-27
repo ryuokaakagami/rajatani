@@ -1,9 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/domain/user/enums/gender.dart';
 
 part 'profile_update.freezed.dart';
 part 'profile_update.g.dart';
+
+String? _dateOnly(DateTime? date) =>
+    date == null ? null : DateFormat('yyyy-MM-dd').format(date);
 
 @freezed
 abstract class ProfileUpdate with _$ProfileUpdate {
@@ -14,8 +18,7 @@ abstract class ProfileUpdate with _$ProfileUpdate {
     @JsonKey(includeIfNull: false) String? fullname,
     @JsonKey(includeIfNull: false) String? bio,
     @JsonKey(includeIfNull: false) Gender? gender,
-    @JsonKey(includeIfNull: false) DateTime? birthday,
-    @JsonKey(includeIfNull: false) String? avatarUrl,
+    @JsonKey(includeIfNull: false, toJson: _dateOnly) DateTime? birthday,
   }) = _ProfileUpdate;
 
   factory ProfileUpdate.fromJson(Map<String, dynamic> json) =>

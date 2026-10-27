@@ -15,7 +15,6 @@ _ProfileUpdate _$ProfileUpdateFromJson(Map<String, dynamic> json) =>
       birthday: json['birthday'] == null
           ? null
           : DateTime.parse(json['birthday'] as String),
-      avatarUrl: json['avatarUrl'] as String?,
     );
 
 Map<String, dynamic> _$ProfileUpdateToJson(_ProfileUpdate instance) =>
@@ -24,8 +23,7 @@ Map<String, dynamic> _$ProfileUpdateToJson(_ProfileUpdate instance) =>
       'fullname': ?instance.fullname,
       'bio': ?instance.bio,
       'gender': ?_$GenderEnumMap[instance.gender],
-      'birthday': ?instance.birthday?.toIso8601String(),
-      'avatarUrl': ?instance.avatarUrl,
+      'birthday': ?_dateOnly(instance.birthday),
     };
 
 const _$GenderEnumMap = {

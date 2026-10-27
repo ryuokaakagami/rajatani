@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/domain/user/entities/user_entity.dart';
 import '../../../../../shared/shared.dart';
 import '../../../constants/profile_string.dart';
 import '../../../data/models/profile_update.dart';
@@ -10,17 +11,16 @@ import '../../cubit/edit/profile_edit_cubit.dart';
 import '../../widgets/profile_edit_layout.dart';
 
 class ProfileEditNameScreen extends StatefulWidget {
-  final String? id, name;
-
-  const new({super.key, this.id, this.name});
+  const new({super.key});
 
   @override
   State<ProfileEditNameScreen> createState() => _ProfileEditNameScreenState();
 }
 
 class _ProfileEditNameScreenState extends State<ProfileEditNameScreen> {
-  String? get _name => widget.name;
-  String? get _id => widget.id;
+  late final UserEntity _user = context.read<UserCubit>().state.data!;
+  String get _id => _user.id;
+  String? get _name => _user.fullname;
 
   late final TextEditingController _controller;
   final _key = GlobalKey<FormState>();
@@ -44,7 +44,7 @@ class _ProfileEditNameScreenState extends State<ProfileEditNameScreen> {
 
     if (isValid) {
       final newData = ProfileUpdate(fullname: name);
-      cubit.update(userId: _id ?? '', data: newData);
+      cubit.update(userId: _id, data: newData);
     }
   }
 
@@ -58,7 +58,7 @@ class _ProfileEditNameScreenState extends State<ProfileEditNameScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<ProfileEditCubit, ProfileEditState>(
       listener: (context, state) {
-        context.handleProfileEditState(state: state, userId: _id ?? '');
+        context.handleProfileEditState(state: state, userId: _id);
       },
       builder: (context, state) {
         return ProfileEditLayout(

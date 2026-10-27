@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/domain/user/entities/user_entity.dart';
 import '../../../../../core/domain/user/enums/gender.dart';
 import '../../../../../shared/constant/constant.dart';
+import '../../../../../shared/cubit/user/user_cubit.dart';
 import '../../../../../shared/validator/rules/required_validator.dart';
 import '../../../../../shared/widget/widget.dart';
 import '../../../constants/profile_string.dart';
@@ -13,10 +15,7 @@ import '../../cubit/edit/profile_edit_cubit.dart';
 import '../../widgets/profile_edit_layout.dart';
 
 class ProfileEditGenderScreen extends StatefulWidget {
-  final String? id;
-  final Gender? gender;
-
-  const new({super.key, this.id, this.gender});
+  const new({super.key});
 
   @override
   State<ProfileEditGenderScreen> createState() =>
@@ -24,8 +23,9 @@ class ProfileEditGenderScreen extends StatefulWidget {
 }
 
 class _ProfileEditGenderScreenState extends State<ProfileEditGenderScreen> {
-  String? get _id => widget.id;
-  Gender? get _gender => widget.gender;
+  late final UserEntity _user = context.read<UserCubit>().state.data!;
+  String get _id => _user.id;
+  Gender? get _gender => _user.gender;
 
   late final TextEditingController _controller;
   late final ValueNotifier<Gender?> _notifier;
@@ -46,7 +46,7 @@ class _ProfileEditGenderScreenState extends State<ProfileEditGenderScreen> {
     final isValidate = _key.currentState?.validate() ?? false;
     final gender = _notifier.value;
 
-    final isChanged = gender != widget.gender;
+    final isChanged = gender != _user.gender;
     final isValid = isValidate && isChanged;
 
     final cubit = context.read<ProfileEditCubit>();
@@ -54,7 +54,7 @@ class _ProfileEditGenderScreenState extends State<ProfileEditGenderScreen> {
     if (isValid) {
       final newData = ProfileUpdate(gender: gender);
 
-      cubit.update(userId: _id ?? '', data: newData);
+      cubit.update(userId: _id, data: newData);
     }
   }
 
@@ -79,7 +79,7 @@ class _ProfileEditGenderScreenState extends State<ProfileEditGenderScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<ProfileEditCubit, ProfileEditState>(
       listener: (context, state) {
-        context.handleProfileEditState(state: state, userId: _id ?? '');
+        context.handleProfileEditState(state: state, userId: _id);
       },
       builder: (context, state) {
         return ProfileEditLayout(

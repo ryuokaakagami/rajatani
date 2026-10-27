@@ -12,13 +12,16 @@ class SupabaseDatabaseExceptionMapper implements AppExceptionMapper {
 
     return switch (e.code) {
       // --- Custom Username Exceptions ---
-      'USN01' => UsernameTooShortException(),
-      'USN02' => UsernameAlreadyExistsException(),
-      'USN03' => UsernameCooldownException(),
-      'USN04' => UsernameInvalidCharactersException(),
+      'USN01' => const UsernameTooShortException(),
+      'USN02' => const UsernameAlreadyExistsException(),
+      'USN03' => const UsernameCooldownException(),
+      'USN04' => const UsernameInvalidCharactersException(),
 
       // --- Standard Database Exceptions ---
-      '23505' => const DatabaseDuplicateException(),
+      '23505' =>
+        _isUsernameConflict(e)
+            ? const UsernameAlreadyExistsException()
+            : const DatabaseDuplicateException(),
       '23503' => const DatabaseReferenceException(),
       '23502' || '23514' || '22P02' => const DatabaseInvalidDataException(),
       '42501' => const DatabasePermissionDeniedException(),
@@ -26,4 +29,7 @@ class SupabaseDatabaseExceptionMapper implements AppExceptionMapper {
       _ => null,
     };
   }
+
+  bool _isUsernameConflict(PostgrestException e) =>
+      '${e.message} ${e.details}'.contains('username');
 }

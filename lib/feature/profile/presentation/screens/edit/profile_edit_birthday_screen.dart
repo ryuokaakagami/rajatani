@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/domain/user/entities/user_entity.dart';
 import '../../../../../shared/constant/constant.dart';
+import '../../../../../shared/cubit/user/user_cubit.dart';
 import '../../../../../shared/extension/extension.dart';
 import '../../../../../shared/validator/rules/required_validator.dart';
 import '../../../../../shared/widget/widget.dart';
@@ -13,10 +15,7 @@ import '../../cubit/edit/profile_edit_cubit.dart';
 import '../../widgets/profile_edit_layout.dart';
 
 class ProfileEditBirthdayScreen extends StatefulWidget {
-  final String? id;
-  final DateTime? birthday;
-
-  const new({super.key, this.id, this.birthday});
+  const new({super.key});
 
   @override
   State<ProfileEditBirthdayScreen> createState() =>
@@ -24,8 +23,9 @@ class ProfileEditBirthdayScreen extends StatefulWidget {
 }
 
 class _ProfileEditBirthdayScreenState extends State<ProfileEditBirthdayScreen> {
-  String? get _id => widget.id;
-  DateTime? get _birthday => widget.birthday;
+  late final UserEntity _user = context.read<UserCubit>().state.data!;
+  String get _id => _user.id;
+  DateTime? get _birthday => _user.birthday;
 
   late final TextEditingController _controller;
   late final ValueNotifier<DateTime?> _notifier;
@@ -54,7 +54,7 @@ class _ProfileEditBirthdayScreenState extends State<ProfileEditBirthdayScreen> {
     if (isValid) {
       final newData = ProfileUpdate(birthday: birthday);
 
-      cubit.update(userId: _id ?? '', data: newData);
+      cubit.update(userId: _id, data: newData);
     }
   }
 
@@ -65,7 +65,7 @@ class _ProfileEditBirthdayScreenState extends State<ProfileEditBirthdayScreen> {
     if (!mounted || date == null) return;
 
     _notifier.value = date;
-    _controller.text = date.toFormat ?? '';
+    _controller.text = date.toFormat;
   }
 
   @override
@@ -79,7 +79,7 @@ class _ProfileEditBirthdayScreenState extends State<ProfileEditBirthdayScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<ProfileEditCubit, ProfileEditState>(
       listener: (context, state) {
-        context.handleProfileEditState(state: state, userId: _id ?? '');
+        context.handleProfileEditState(state: state, userId: _id);
       },
       builder: (context, state) {
         return ProfileEditLayout(

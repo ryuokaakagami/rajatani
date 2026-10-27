@@ -36,10 +36,7 @@ class ProfileDetailScreen extends StatelessWidget {
             _Header(
               onTapAvatar: () {
                 if (data?.avatarUrl != null) {
-                  context.pushNamed(
-                    RoutesConstant.names.photoProfile,
-                    extra: {'id': data?.id, 'avatarUrl': data?.avatarUrl},
-                  );
+                  context.pushNamed(RoutesConstant.names.photoProfile);
                   return;
                 }
                 changedPhoto();
@@ -55,38 +52,19 @@ class ProfileDetailScreen extends StatelessWidget {
 
             _PersonalSection(
               onTapFullname: () {
-                context.pushNamed(
-                  RoutesConstant.names.editNameProfile,
-                  extra: {'id': data?.id, 'name': data?.fullname},
-                );
+                context.pushNamed(RoutesConstant.names.editNameProfile);
               },
               onTapUsername: () {
-                context.pushNamed(
-                  RoutesConstant.names.editUsernameProfile,
-                  extra: {
-                    'id': data?.id,
-                    'username': data?.username,
-                    'username_updated_at': data?.usernameUpdatedAt,
-                  },
-                );
+                context.pushNamed(RoutesConstant.names.editUsernameProfile);
               },
               onTapBio: () {
-                context.pushNamed(
-                  RoutesConstant.names.editBioProfile,
-                  extra: {'id': data?.id, 'bio': data?.bio},
-                );
+                context.pushNamed(RoutesConstant.names.editBioProfile);
               },
               onTapGender: () {
-                context.pushNamed(
-                  RoutesConstant.names.editGenderProfile,
-                  extra: {'id': data?.id, 'gender': data?.gender},
-                );
+                context.pushNamed(RoutesConstant.names.editGenderProfile);
               },
               onTapBirthday: () {
-                context.pushNamed(
-                  RoutesConstant.names.editBirthdayProfile,
-                  extra: {'id': data?.id, 'birthday': data?.birthday},
-                );
+                context.pushNamed(RoutesConstant.names.editBirthdayProfile);
               },
               fullname: data?.fullname,
               username: data?.username,

@@ -31,7 +31,9 @@ export 'extensions/birthday_sheet_x.dart';
 export 'extensions/gender_sheet_x.dart';
 export 'extensions/gender_x.dart';
 export 'extensions/profile_photo_x.dart';
+export 'extensions/username_x.dart';
 
 export 'constants/profile_string.dart';
+export 'constants/username_policy.dart';
 
 export 'utils/user_name_formatter.dart';

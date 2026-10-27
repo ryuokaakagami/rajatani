@@ -12,11 +12,9 @@ extension ProfileEditListenerX on BuildContext {
     required String userId,
   }) {
     state.maybeWhen(
-      success: () async {
-        await read<UserCubit>().fetch(userId);
-        if (mounted) {
-          pop();
-        }
+      success: () {
+        read<UserCubit>().fetch(userId);
+        pop();
       },
       error: (message) => snackBarError(message),
       orElse: () {},
