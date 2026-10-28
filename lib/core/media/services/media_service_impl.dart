@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../error/app_exception.dart';
 import '../../utils/safe_call.dart';
@@ -50,5 +54,37 @@ class MediaServiceImpl with SafeCall implements MediaService {
         return images.map((image) => image?.path).toList();
       },
     );
+  }
+
+  @override
+  Future<Either<AppException, String>> convertToWebp({
+    required String path,
+    int quality = 80,
+  }) {
+    return call(
+      doAction: () async {
+        final dir = await getTemporaryDirectory();
+        final target =
+            '${dir.path}/${DateTime.now().millisecondsSinceEpoch}.webp';
+
+        final file = await FlutterImageCompress.compressAndGetFile(
+          path,
+          target,
+          format: .webp,
+          quality: quality,
+        );
+
+        if (file == null) throw const ImageConversionException();
+
+        return file.path;
+      },
+    );
+  }
+
+  @override
+  Future<void> deleteFile(String path) async {
+    try {
+      await File(path).delete();
+    } catch (_) {}
   }
 }

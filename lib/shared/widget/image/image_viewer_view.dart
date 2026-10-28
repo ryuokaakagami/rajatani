@@ -51,21 +51,23 @@ class _ImageViewerViewState extends State<ImageViewerView>
     final scheme = Scheme.dark();
     final textTheme = context.textTheme;
 
-    final image = CachedNetworkImage(
-      width: context.width,
-      height: context.width,
-      fit: BoxFit.cover,
-      imageUrl: widget.imageUrl!,
-      placeholder: (_, _) => const AppLoading(),
-      errorWidget: (_, _, _) => const Icon(Icons.error),
-    );
+    final url = widget.imageUrl;
 
-    final fallbackText = Text(
-      'No image available',
-      style: textTheme.bodyMedium?.copyWith(color: scheme.onSurfaceVariant),
-    );
-
-    Widget child = widget.imageUrl != null ? image : fallbackText;
+    Widget child = url != null
+        ? CachedNetworkImage(
+            width: context.width,
+            height: context.width,
+            fit: BoxFit.cover,
+            imageUrl: url,
+            placeholder: (_, _) => const AppLoading(),
+            errorWidget: (_, _, _) => const Icon(Icons.error),
+          )
+        : Text(
+            'No image available',
+            style: textTheme.bodyMedium?.copyWith(
+              color: scheme.onSurfaceVariant,
+            ),
+          );
 
     if (widget.heroTag != null) {
       child = Hero(tag: widget.heroTag!, child: child);

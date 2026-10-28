@@ -4,10 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart';
 
 import '../../../../config/routes/routes.dart';
-import '../../../../core/utils/console.dart';
+import '../../../../config/service/locator.dart';
 import '../../../../shared/shared.dart';
 import '../../constants/profile_string.dart';
-import '../../extensions/profile_photo_x.dart';
+import '../cubit/avatar/avatar_cubit.dart';
+import '../extensions/profile_edit_x.dart';
+import '../extensions/profile_photo_x.dart';
 import '../widgets/profile_avatar.dart';
 import '../widgets/profile_layout.dart';
 import '../widgets/profile_section.dart';
@@ -21,21 +23,30 @@ class ProfileDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final data = context.select((UserCubit c) => c.state.data!);
+
     void changedPhoto() async {
-      final path = await context.pickPhotoProfile();
-      if (path == null || !context.mounted) return;
-      Console.info(message: path);
+      await context.changePhotoProfile(
+        userId: data.id,
+        oldPath: data.avatarPath,
+        showDelete: data.avatarUrl != null,
+      );
     }
 
-    return BlocBuilder<UserCubit, UserState>(
+    return BlocConsumer<AvatarCubit, AvatarState>(
+      listener: (context, state) {
+        final loading = sl<LoadingDialogController>();
+        state.isLoading ? loading.show() : loading.hide();
+        context.handleAvatarState(state: state, userId: data.id);
+      },
+      listenWhen: (prev, curr) => prev != curr,
       builder: (context, state) {
-        final data = state.data;
         return ProfileLayout(
-          titleAppBar: data?.username,
+          titleAppBar: data.username,
           children: [
             _Header(
               onTapAvatar: () {
-                if (data?.avatarUrl != null) {
+                if (data.avatarUrl != null) {
                   context.pushNamed(RoutesConstant.names.photoProfile);
                   return;
                 }
@@ -44,10 +55,10 @@ class ProfileDetailScreen extends StatelessWidget {
               onTapBadge: () {
                 changedPhoto();
               },
-              imageUrl: data?.avatarUrl,
-              heroTag: data?.id,
-              rating: data?.rating,
-              totalReview: data?.totalReviews,
+              imageUrl: data.avatarUrl,
+              heroTag: data.id,
+              rating: data.rating,
+              totalReview: data.totalReviews,
             ),
 
             _PersonalSection(
@@ -66,11 +77,11 @@ class ProfileDetailScreen extends StatelessWidget {
               onTapBirthday: () {
                 context.pushNamed(RoutesConstant.names.editBirthdayProfile);
               },
-              fullname: data?.fullname,
-              username: data?.username,
-              bio: data?.bio,
-              gender: data?.gender?.label,
-              birthday: data?.birthday,
+              fullname: data.fullname,
+              username: data.username,
+              bio: data.bio,
+              gender: data.gender?.label,
+              birthday: data.birthday,
             ),
 
             _ContactSection(
@@ -80,8 +91,8 @@ class ProfileDetailScreen extends StatelessWidget {
               onTapPhone: () {
                 context.pushNamed(RoutesConstant.names.editPhoneProfile);
               },
-              email: data?.email,
-              phone: data?.phone,
+              email: data.email,
+              phone: data.phone,
             ),
           ],
         );

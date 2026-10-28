@@ -12,4 +12,7 @@ void _clientInjection() async {
   sl.registerLazySingleton<DatabaseClient>(
     () => SupabaseDatabaseClient(supabase: sl<SupabaseClient>()),
   );
+  sl.registerLazySingleton<StorageClient>(
+    () => SupabaseFileStorageClient(supabase: sl<SupabaseClient>()),
+  );
 }

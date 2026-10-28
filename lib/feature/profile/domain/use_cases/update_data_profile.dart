@@ -12,5 +12,5 @@ class UpdateDataProfile {
   Future<Either<AppException, Unit>> call({
     required String userId,
     required ProfileUpdate data,
-  }) async => await _repository.update(userId: userId, data: data);
+  }) => _repository.update(userId: userId, data: data);
 }

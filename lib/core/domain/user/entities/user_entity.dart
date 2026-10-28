@@ -16,12 +16,13 @@ abstract class UserEntity with _$UserEntity {
     String? phone,
     String? bio,
     String? avatarUrl,
+    String? avatarPath,
     Gender? gender,
     DateTime? birthday,
     @Default(0.0) double rating,
     @Default(0) int totalReviews,
+    DateTime? usernameUpdatedAt,
     DateTime? updatedAt,
     DateTime? createdAt,
-    DateTime? usernameUpdatedAt,
   }) = _UserEntity;
 }

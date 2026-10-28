@@ -5,7 +5,7 @@ import '../../../../domain/session/repositories/session_repository.dart';
 import '../../../../error/app_exception.dart';
 import '../../../../error/mapper/app_exception_mapper.dart';
 import '../../../../utils/safe_call.dart';
-import '../remote/session_remote.dart';
+import '../remotes/session_remote.dart';
 
 class SessionRepositoryImpl with SafeCall implements SessionRepository {
   final SessionRemote _remote;

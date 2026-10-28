@@ -4,7 +4,7 @@ import '../../../../../core/error/app_exception.dart';
 import '../../../../../core/error/mapper/app_exception_mapper.dart';
 import '../../../../../core/utils/safe_call.dart';
 import '../../../domain/repositories/auth_repository.dart';
-import '../remote/auth_remote.dart';
+import '../remotes/auth_remote.dart';
 
 class AuthRepositoryImpl with SafeCall implements AuthRepository {
   final AuthRemote _remote;

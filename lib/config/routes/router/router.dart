@@ -19,13 +19,13 @@ part '_profile_route.dart';
 final _session = sl<SessionCubit>();
 final _refresh = RoutesRefresh(session: _session.stream);
 final _guard = RoutesGuard(cubit: _session, refresh: _refresh);
-final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final rootNavigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
   initialLocation: RoutesConstant.paths.initial,
   refreshListenable: _refresh,
   redirect: _guard.redirect,
-  navigatorKey: _rootNavigatorKey,
+  navigatorKey: rootNavigatorKey,
   routes: [
     GoRoute(
       path: RoutesConstant.paths.initial,

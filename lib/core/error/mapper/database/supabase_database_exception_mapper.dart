@@ -4,7 +4,7 @@ import '../../app_exception.dart';
 import '../app_exception_mapper.dart';
 
 class SupabaseDatabaseExceptionMapper implements AppExceptionMapper {
-  const SupabaseDatabaseExceptionMapper();
+  const new();
 
   @override
   AppException? map(Object e) {

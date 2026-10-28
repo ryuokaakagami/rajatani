@@ -2,8 +2,9 @@ part of '../extensions/image_x.dart';
 
 class _ImagePickerSheetHeader extends StatelessWidget {
   final VoidCallback? onTapDelete;
+  final bool showDelete;
 
-  const new({this.onTapDelete});
+  const new({this.onTapDelete, this.showDelete = true});
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +31,17 @@ class _ImagePickerSheetHeader extends StatelessWidget {
             style: textTheme.titleLarge?.copyWith(fontWeight: .w600),
           ),
 
-          AppButton.ghost(
-            onPressed: onTapDelete,
-            icon: AppIcon.trash,
-            iconSize: IconSize.sm,
-            foregroundColor: scheme.onBackground,
+          Visibility(
+            visible: showDelete,
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            child: AppButton.ghost(
+              onPressed: onTapDelete,
+              icon: AppIcon.trash,
+              iconSize: IconSize.sm,
+              foregroundColor: scheme.onBackground,
+            ),
           ),
         ],
       ),

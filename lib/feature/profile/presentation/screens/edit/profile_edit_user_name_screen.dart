@@ -12,7 +12,7 @@ import '../../../../../shared/validator/app_validator.dart';
 import '../../../../../shared/widget/widget.dart';
 import '../../../constants/profile_string.dart';
 import '../../../data/models/profile_update.dart';
-import '../../../extensions/profile_edit_x.dart';
+import '../../extensions/profile_edit_x.dart';
 import '../../../extensions/username_x.dart';
 import '../../../utils/user_name_formatter.dart';
 import '../../cubit/edit/profile_edit_cubit.dart';

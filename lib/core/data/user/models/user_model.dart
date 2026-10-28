@@ -18,13 +18,14 @@ abstract class UserModel with _$UserModel {
     String? phone,
     String? bio,
     @JsonKey(name: 'avatar_url') String? avatarUrl,
+    @JsonKey(name: 'avatar_path') String? avatarPath,
     Gender? gender,
     DateTime? birthday,
     @Default(0.0) double rating,
     @JsonKey(name: 'total_reviews') @Default(0) int totalReviews,
+    @JsonKey(name: 'username_updated_at') DateTime? usernameUpdatedAt,
     @JsonKey(name: 'updated_at') DateTime? updatedAt,
     @JsonKey(name: 'created_at') DateTime? createdAt,
-    @JsonKey(name: 'username_updated_at') DateTime? usernameUpdatedAt,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
@@ -38,13 +39,14 @@ abstract class UserModel with _$UserModel {
     phone: phone,
     bio: bio,
     avatarUrl: avatarUrl,
+    avatarPath: avatarPath,
     gender: gender,
     birthday: birthday,
     rating: rating,
     totalReviews: totalReviews,
+    usernameUpdatedAt: usernameUpdatedAt,
     updatedAt: updatedAt,
     createdAt: createdAt,
-    usernameUpdatedAt: usernameUpdatedAt,
   );
 
   factory UserModel.fromEntity(UserEntity e) => UserModel(
@@ -55,12 +57,13 @@ abstract class UserModel with _$UserModel {
     phone: e.phone,
     bio: e.bio,
     avatarUrl: e.avatarUrl,
+    avatarPath: e.avatarPath,
     gender: e.gender,
     birthday: e.birthday,
     rating: e.rating,
     totalReviews: e.totalReviews,
+    usernameUpdatedAt: e.usernameUpdatedAt,
     updatedAt: e.updatedAt,
     createdAt: e.createdAt,
-    usernameUpdatedAt: e.usernameUpdatedAt,
   );
 }

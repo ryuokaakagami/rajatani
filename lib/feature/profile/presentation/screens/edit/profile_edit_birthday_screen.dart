@@ -9,8 +9,8 @@ import '../../../../../shared/validator/rules/required_validator.dart';
 import '../../../../../shared/widget/widget.dart';
 import '../../../constants/profile_string.dart';
 import '../../../data/models/profile_update.dart';
-import '../../../extensions/birthday_sheet_x.dart';
-import '../../../extensions/profile_edit_x.dart';
+import '../../extensions/birthday_sheet_x.dart';
+import '../../extensions/profile_edit_x.dart';
 import '../../cubit/edit/profile_edit_cubit.dart';
 import '../../widgets/profile_edit_layout.dart';
 

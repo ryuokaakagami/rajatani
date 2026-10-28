@@ -13,24 +13,30 @@ final _profileRoute = StatefulShellBranch(
       },
       routes: [
         GoRoute(
-          parentNavigatorKey: _rootNavigatorKey,
+          parentNavigatorKey: rootNavigatorKey,
           path: RoutesConstant.paths.detail,
           name: RoutesConstant.names.detailProfile,
           pageBuilder: (context, state) {
             return transitionPage(
               key: state.pageKey,
-              child: const ProfileDetailScreen(),
+              child: BlocProvider(
+                create: (_) => sl<AvatarCubit>(),
+                child: const ProfileDetailScreen(),
+              ),
             );
           },
           routes: [
             GoRoute(
-              parentNavigatorKey: _rootNavigatorKey,
+              parentNavigatorKey: rootNavigatorKey,
               path: RoutesConstant.paths.photo,
               name: RoutesConstant.names.photoProfile,
               pageBuilder: (context, state) {
                 return transitionPage(
                   key: state.pageKey,
-                  child: const ProfilePhotoScreen(),
+                  child: BlocProvider(
+                    create: (_) => sl<AvatarCubit>(),
+                    child: const ProfilePhotoScreen(),
+                  ),
                 );
               },
             ),
@@ -45,7 +51,7 @@ final _profileRoute = StatefulShellBranch(
               },
               routes: [
                 GoRoute(
-                  parentNavigatorKey: _rootNavigatorKey,
+                  parentNavigatorKey: rootNavigatorKey,
                   path: RoutesConstant.paths.name,
                   name: RoutesConstant.names.editNameProfile,
                   pageBuilder: (context, state) {
@@ -60,7 +66,7 @@ final _profileRoute = StatefulShellBranch(
                 ),
 
                 GoRoute(
-                  parentNavigatorKey: _rootNavigatorKey,
+                  parentNavigatorKey: rootNavigatorKey,
                   path: RoutesConstant.paths.username,
                   name: RoutesConstant.names.editUsernameProfile,
                   pageBuilder: (context, state) {
@@ -78,7 +84,7 @@ final _profileRoute = StatefulShellBranch(
                 ),
 
                 GoRoute(
-                  parentNavigatorKey: _rootNavigatorKey,
+                  parentNavigatorKey: rootNavigatorKey,
                   path: RoutesConstant.paths.bio,
                   name: RoutesConstant.names.editBioProfile,
                   pageBuilder: (context, state) {
@@ -93,7 +99,7 @@ final _profileRoute = StatefulShellBranch(
                 ),
 
                 GoRoute(
-                  parentNavigatorKey: _rootNavigatorKey,
+                  parentNavigatorKey: rootNavigatorKey,
                   path: RoutesConstant.paths.gender,
                   name: RoutesConstant.names.editGenderProfile,
                   pageBuilder: (context, state) {
@@ -108,7 +114,7 @@ final _profileRoute = StatefulShellBranch(
                 ),
 
                 GoRoute(
-                  parentNavigatorKey: _rootNavigatorKey,
+                  parentNavigatorKey: rootNavigatorKey,
                   path: RoutesConstant.paths.birthday,
                   name: RoutesConstant.names.editBirthdayProfile,
                   pageBuilder: (context, state) {
@@ -123,7 +129,7 @@ final _profileRoute = StatefulShellBranch(
                 ),
 
                 GoRoute(
-                  parentNavigatorKey: _rootNavigatorKey,
+                  parentNavigatorKey: rootNavigatorKey,
                   path: RoutesConstant.paths.email,
                   name: RoutesConstant.names.editEmailProfile,
                   pageBuilder: (context, state) {
@@ -135,7 +141,7 @@ final _profileRoute = StatefulShellBranch(
                 ),
 
                 GoRoute(
-                  parentNavigatorKey: _rootNavigatorKey,
+                  parentNavigatorKey: rootNavigatorKey,
                   path: RoutesConstant.paths.phone,
                   name: RoutesConstant.names.editPhoneProfile,
                   pageBuilder: (context, state) {

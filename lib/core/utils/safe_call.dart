@@ -14,11 +14,14 @@ mixin SafeCall {
     try {
       final result = await doAction();
       return Right(result);
+    } on AppException catch (e) {
+      return Left(e);
     } on SocketException {
       return Left(const NetworkException());
     } on TimeoutException {
       return Left(const TimeOutException());
     } catch (e, s) {
+      Console.error(e, stackTrace: s, message: e.toString());
       final mapped = customErrorHandler?.call(e);
       if (mapped == null) {
         Console.error(e, stackTrace: s, message: e.toString());

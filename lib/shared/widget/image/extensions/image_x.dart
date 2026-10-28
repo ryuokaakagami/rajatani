@@ -20,11 +20,12 @@ part '../styles/_image_picker_sheet_header.dart';
 part '../styles/_image_picker_sheet_item.dart';
 
 extension ImageX on BuildContext {
-  Future<ImagePickerType?> showImagePickerSheet() {
+  Future<ImagePickerType?> showImagePickerSheet({bool showDelete = true}) {
     return showAppBottomSheet<ImagePickerType>(
       builder: (context) {
         return [
           _ImagePickerSheetHeader(
+            showDelete: showDelete,
             onTapDelete: () {
               context.pop(ImagePickerType.delete);
             },
@@ -63,7 +64,7 @@ extension ImageX on BuildContext {
 
     final tempDir = await getTemporaryDirectory();
     final tempFile = File(
-      '${tempDir.path}/cropped_${DateTime.now().millisecondsSinceEpoch}.png',
+      '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}.png',
     );
 
     await tempFile.writeAsBytes(bytes);

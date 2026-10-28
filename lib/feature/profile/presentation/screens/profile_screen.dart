@@ -22,41 +22,38 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final data = context.select((UserCubit c) => c.state.data!);
+
     void onTapDetailProfile() {
       context.pushNamed(RoutesConstant.names.detailProfile);
     }
 
-    return BlocBuilder<UserCubit, UserState>(
-      builder: (context, state) {
-        final data = state.data;
-        return ProfileLayout(
-          children: [
-            _Header(
-              onTapAvatar: onTapDetailProfile,
-              imageUrl: data?.avatarUrl,
-              fullname: data?.fullname,
-              username: data?.username,
-              heroTag: data?.id,
-            ),
+    return ProfileLayout(
+      children: [
+        _Header(
+          onTapAvatar: onTapDetailProfile,
+          imageUrl: data.avatarUrl,
+          fullname: data.fullname,
+          username: data.username,
+          heroTag: data.id,
+        ),
 
-            _AccountSection(
-              onTapDetail: onTapDetailProfile,
-              onTapDelivery: () {},
-              onTapPrivacy: () {},
-            ),
+        _AccountSection(
+          onTapDetail: onTapDetailProfile,
+          onTapDelivery: () {},
+          onTapPrivacy: () {},
+        ),
 
-            _TransactionSection(onTapOrder: () {}),
+        _TransactionSection(onTapOrder: () {}),
 
-            _SellingSection(onTapCreateStore: () {}),
+        _SellingSection(onTapCreateStore: () {}),
 
-            _HelpSection(
-              onTapService: () {},
-              onTapSetting: () {},
-              onTapLogOut: () async => await context.dialogLogOut(),
-            ),
-          ],
-        );
-      },
+        _HelpSection(
+          onTapService: () {},
+          onTapSetting: () {},
+          onTapLogOut: () async => await context.dialogLogOut(),
+        ),
+      ],
     );
   }
 }

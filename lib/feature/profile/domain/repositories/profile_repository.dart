@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/core.dart';
@@ -13,4 +15,19 @@ abstract class ProfileRepository {
     required String username,
     required String userId,
   });
+
+  Future<Either<AppException, Unit>> setAvatar({
+    required String userId,
+    required String? url,
+    required String? path,
+  });
+
+  Future<Either<AppException, Unit>> uploadAvatar({
+    required String path,
+    required File file,
+  });
+
+  String avatarPublicUrl({required String path});
+
+  Future<Either<AppException, Unit>> removeAvatar({required String path});
 }

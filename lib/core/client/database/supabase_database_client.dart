@@ -13,17 +13,13 @@ class SupabaseDatabaseClient implements DatabaseClient {
     String table, {
     required String column,
     required String value,
-  }) async {
-    return await _supabase.from(table).select().eq(column, value).maybeSingle();
-  }
+  }) => _supabase.from(table).select().eq(column, value).maybeSingle();
 
   @override
   Future<Map<String, dynamic>> insert(
     String table, {
     required Map<String, dynamic> data,
-  }) async {
-    return await _supabase.from(table).insert(data).select().single();
-  }
+  }) => _supabase.from(table).insert(data).select().single();
 
   @override
   Future<void> update(

@@ -17,6 +17,7 @@ export 'presentation/widgets/profile_avatar.dart';
 
 export 'presentation/cubit/edit/profile_edit_cubit.dart';
 export 'presentation/cubit/username/check_username_cubit.dart';
+export 'presentation/cubit/avatar/avatar_cubit.dart';
 
 export 'data/models/profile_update.dart';
 export 'data/sources/remotes/profile_remote.dart';
@@ -26,11 +27,16 @@ export 'data/sources/repositories/profile_repository_impl.dart';
 export 'domain/repositories/profile_repository.dart';
 export 'domain/use_cases/update_data_profile.dart';
 export 'domain/use_cases/check_username_available.dart';
+export 'domain/use_cases/delete_avatar.dart';
+export 'domain/use_cases/discard_avatar_job.dart';
+export 'domain/use_cases/prepare_avatar.dart';
+export 'domain/use_cases/update_avatar.dart';
+export 'domain/entities/avatar_upload_job.dart';
 
-export 'extensions/birthday_sheet_x.dart';
-export 'extensions/gender_sheet_x.dart';
-export 'extensions/gender_x.dart';
-export 'extensions/profile_photo_x.dart';
+export 'presentation/extensions/birthday_sheet_x.dart';
+export 'presentation/extensions/gender_sheet_x.dart';
+export 'presentation/extensions/gender_x.dart';
+export 'presentation/extensions/profile_photo_x.dart';
 export 'extensions/username_x.dart';
 
 export 'constants/profile_string.dart';

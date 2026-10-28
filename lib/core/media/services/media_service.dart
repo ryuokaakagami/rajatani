@@ -17,4 +17,11 @@ abstract class MediaService {
     double? maxWidth,
     double? maxHeight,
   });
+
+  Future<Either<AppException, String>> convertToWebp({
+    required String path,
+    int quality = 80,
+  });
+
+  Future<void> deleteFile(String path);
 }

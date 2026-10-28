@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../core/core.dart';
 import '../../feature/feature.dart';
 import '../../shared/shared.dart';
+import '../routes/router/router.dart';
 
 part '_clients_locator.dart';
 part '_error_mapper_locator.dart';
@@ -16,6 +17,9 @@ part '_profile_locator.dart';
 final sl = GetIt.instance;
 
 void initLocator() {
+  sl.registerLazySingleton(
+    () => LoadingDialogController(key: rootNavigatorKey),
+  );
   _mediaInjection();
   _errorInjection();
   _clientInjection();

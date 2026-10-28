@@ -6,7 +6,7 @@ import '../../../../../core/domain/user/entities/user_entity.dart';
 import '../../../../../shared/shared.dart';
 import '../../../constants/profile_string.dart';
 import '../../../data/models/profile_update.dart';
-import '../../../extensions/profile_edit_x.dart';
+import '../../extensions/profile_edit_x.dart';
 import '../../cubit/edit/profile_edit_cubit.dart';
 import '../../widgets/profile_edit_layout.dart';
 

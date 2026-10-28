@@ -11,8 +11,5 @@ class CheckUsernameAvailable {
   Future<Either<AppException, Unit>> call({
     required String username,
     required String userId,
-  }) async => await _repository.checkUsernameAvailable(
-    username: username,
-    userId: userId,
-  );
+  }) => _repository.checkUsernameAvailable(username: username, userId: userId);
 }

@@ -1,11 +1,23 @@
-part of 'dialog.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:icons_plus_pro/icons_plus_pro.dart';
+
+import '../../constant/button_size.dart';
+import '../../constant/icon_size.dart';
+import '../../constant/spacing_size.dart';
+import '../../cubit/session/session_cubit.dart';
+import '../../theme/app_theme.dart';
+import '../app_loading.dart';
+import '../button/button.dart';
+
+part 'app_dialog.dart';
 
 extension DialogX on BuildContext {
   Future<void> dialogInfo({required String title, required String message}) {
     return showDialog<void>(
       context: this,
       builder: (ctx) => AppDialog.build(
-        context: ctx,
         title: title,
         message: message,
         icon: Iconsax.information_outline,
@@ -27,7 +39,6 @@ extension DialogX on BuildContext {
       context: this,
       barrierDismissible: barrierDisabled ?? false,
       builder: (ctx) => AppDialog.build(
-        context: ctx,
         title: title,
         message: message,
         icon: Iconsax.message_question_outline,
@@ -63,7 +74,6 @@ extension DialogX on BuildContext {
       context: this,
       barrierDismissible: barrierDisabled ?? false,
       builder: (ctx) => AppDialog.build(
-        context: ctx,
         title: title,
         message: message,
         icon: Iconsax.warning_2_outline,
@@ -84,6 +94,50 @@ extension DialogX on BuildContext {
             minimumSize: const Size(.0, ButtonSize.sm),
           ),
         ],
+      ),
+    );
+  }
+
+  Future<bool> dialogRetry({
+    required String title,
+    required String message,
+    String retryText = 'Retry',
+  }) async {
+    final result = await showDialog<bool>(
+      context: this,
+      barrierDismissible: false,
+      builder: (ctx) => AppDialog.build(
+        title: title,
+        message: message,
+        icon: Iconsax.warning_2_outline,
+        iconColor: scheme.warning,
+        actions: [
+          AppButton.ghost(
+            onPressed: () => ctx.pop(false),
+            label: 'Cancel',
+            foregroundColor: scheme.onSurfaceVariant,
+          ),
+          const SizedBox(width: SpacingSize.sm),
+          AppButton(
+            onPressed: () => ctx.pop(true),
+            label: retryText,
+            minimumSize: const Size(.0, ButtonSize.sm),
+          ),
+        ],
+      ),
+    );
+
+    return result ?? false;
+  }
+
+  Future<void> dialogLoading({String? title, String? message}) {
+    return showDialog<void>(
+      context: this,
+      barrierDismissible: false,
+      useRootNavigator: true,
+      builder: (_) => PopScope(
+        canPop: false,
+        child: AppDialog.buildLoading(title: title, message: message),
       ),
     );
   }

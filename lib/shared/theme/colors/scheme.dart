@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 part '_scheme_generate.dart';
 part '_scheme_lerp.dart';
-part '_dark_sceme.dart';
+part '_dark_scheme.dart';
 part '_light_scheme.dart';
 part 'scheme_x.dart';
 
