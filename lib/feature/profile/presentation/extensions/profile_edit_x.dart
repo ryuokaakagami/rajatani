@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../shared/cubit/user/user_cubit.dart';
+import '../../../../shared/user/cubit/user_cubit.dart';
 import '../../../../shared/widget/dialog/dialog_x.dart';
 import '../../../../shared/widget/snackbar/snackbar.dart';
 import '../cubit/avatar/avatar_cubit.dart';

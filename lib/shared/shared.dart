@@ -4,3 +4,4 @@ export 'widget/widget.dart';
 export 'validator/validator.dart';
 export 'extension/extension.dart';
 export 'cubit/cubit.dart';
+export 'user/user.dart';

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/domain/user/entities/user_entity.dart';
 import '../../../../../core/domain/user/enums/gender.dart';
 import '../../../../../shared/constant/constant.dart';
-import '../../../../../shared/cubit/user/user_cubit.dart';
+import '../../../../../shared/user/cubit/user_cubit.dart';
 import '../../../../../shared/validator/rules/required_validator.dart';
 import '../../../../../shared/widget/widget.dart';
 import '../../../constants/profile_string.dart';

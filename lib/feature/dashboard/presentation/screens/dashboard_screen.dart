@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../shared/cubit/cubit.dart';
+import '../../../../shared/user/cubit/user_cubit.dart';
 import '../../../../shared/widget/snackbar/snackbar.dart';
 import '../../data/sources/dashboard_navigation.dart';
 import '../widgets/custom_navigation_bar.dart';
