@@ -7,3 +7,6 @@ export 'dialog/dialog.dart';
 export 'menu/menu.dart';
 export 'bottom_sheet/bottom_sheet.dart';
 export 'image/image.dart';
+export 'resend/resend.dart';
+export 'or_divider.dart';
+export 'step_indicator.dart';

@@ -24,7 +24,9 @@ class _PhoneFormState extends State<_PhoneForm> {
 
   void _handleSignIn() {
     final isValid = _key.currentState?.validate() ?? false;
-    if (isValid) widget.onSignIn?.call(_phoneCtrl.text.trim().normalizePhone);
+    if (isValid) {
+      widget.onSignIn?.call(_phoneCtrl.text.toCleanSpace.normalizePhone);
+    }
   }
 
   @override

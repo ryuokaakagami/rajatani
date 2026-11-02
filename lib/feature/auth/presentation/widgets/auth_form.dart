@@ -13,7 +13,11 @@ class AuthForm extends StatelessWidget {
     return Form(
       key: formKey,
       autovalidateMode: .onUserInteraction,
-      child: Column(mainAxisSize: .min, spacing: SpacingSize.lg, children: children),
+      child: Column(
+        mainAxisSize: .min,
+        spacing: SpacingSize.lg,
+        children: children,
+      ),
     );
   }
 }

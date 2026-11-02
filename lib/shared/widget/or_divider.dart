@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../shared/shared.dart';
+import '../shared.dart';
 
 class OrDivider extends StatelessWidget {
   const new({super.key});

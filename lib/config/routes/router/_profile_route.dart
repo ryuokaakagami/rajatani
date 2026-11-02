@@ -135,7 +135,10 @@ final _profileRoute = StatefulShellBranch(
                   pageBuilder: (context, state) {
                     return transitionPage(
                       key: state.pageKey,
-                      child: const ProfileEditEmailScreen(),
+                      child: BlocProvider(
+                        create: (context) => sl<ContactUpdateCubit>(),
+                        child: const ProfileEditEmailScreen(),
+                      ),
                     );
                   },
                 ),
@@ -147,7 +150,10 @@ final _profileRoute = StatefulShellBranch(
                   pageBuilder: (context, state) {
                     return transitionPage(
                       key: state.pageKey,
-                      child: const ProfileEditPhoneScreen(),
+                      child: BlocProvider(
+                        create: (context) => sl<ContactUpdateCubit>(),
+                        child: const ProfileEditPhoneScreen(),
+                      ),
                     );
                   },
                 ),

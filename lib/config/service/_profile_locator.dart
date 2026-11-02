@@ -9,6 +9,7 @@ void _setupProfileFeature() {
     () => ProfileRemoteImpl(
       databaseClient: sl<DatabaseClient>(),
       storageClient: sl<StorageClient>(),
+      authClient: sl<AuthClient>(),
     ),
   );
 
@@ -27,10 +28,6 @@ void _setupProfileFeature() {
 
   sl.registerLazySingleton(
     () => CheckUsernameAvailable(repository: sl<ProfileRepository>()),
-  );
-
-  sl.registerFactory(
-    () => ProfileEditCubit(updateDataProfile: sl<UpdateDataProfile>()),
   );
 
   sl.registerFactory(
@@ -53,6 +50,30 @@ void _setupProfileFeature() {
   );
 
   sl.registerLazySingleton(() => DiscardAvatarJob(media: sl<MediaService>()));
+
+  sl.registerLazySingleton(
+    () => RequestContactChange(repository: sl<ProfileRepository>()),
+  );
+
+  sl.registerLazySingleton(
+    () => VerificationRequestContactChange(repository: sl<ProfileRepository>()),
+  );
+
+  sl.registerLazySingleton(
+    () => ResendRequestContactChange(repository: sl<ProfileRepository>()),
+  );
+
+  sl.registerFactory(
+    () => ProfileEditCubit(updateDataProfile: sl<UpdateDataProfile>()),
+  );
+
+  sl.registerFactory(
+    () => ContactUpdateCubit(
+      request: sl<RequestContactChange>(),
+      verification: sl<VerificationRequestContactChange>(),
+      resend: sl<ResendRequestContactChange>(),
+    ),
+  );
 
   sl.registerFactory(
     () => AvatarCubit(

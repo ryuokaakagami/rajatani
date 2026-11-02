@@ -25,7 +25,7 @@ class SupabaseAuthClient implements AuthClient {
   );
 
   @override
-  Future<void> verify({
+  Future<AuthResponse> verify({
     required OtpType type,
     String? email,
     String? phone,
@@ -40,6 +40,10 @@ class SupabaseAuthClient implements AuthClient {
   @override
   Future<void> resend({required OtpType type, String? email, String? phone}) =>
       _supabase.auth.resend(type: type, email: email, phone: phone);
+
+  @override
+  Future<void> updateUser({required UserAttributes attributes}) =>
+      _supabase.auth.updateUser(attributes);
 
   @override
   Future<void> signOut() => _supabase.auth.signOut();

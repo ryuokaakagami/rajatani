@@ -26,7 +26,7 @@ final _authRoute = GoRoute(
           key: state.pageKey,
           child: MultiBlocProvider(
             providers: [
-              BlocProvider(create: (_) => sl<ResendTimerCubit>()),
+              BlocProvider.value(value: sl<ResendTimerCubit>()),
               BlocProvider(create: (_) => sl<SignInVerificationCubit>()),
             ],
             child: SignInVerificationScreen(

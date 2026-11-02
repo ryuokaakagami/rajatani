@@ -11,9 +11,15 @@ class AuthHeader extends StatelessWidget {
   final bool isSignIn, isPhoneMode;
   final String contact;
 
-  const new signIn({super.key}) : isSignIn = true, isPhoneMode = false, contact = '';
-  const new verification({super.key, this.isPhoneMode = false, required this.contact})
-    : isSignIn = false;
+  const new signIn({super.key})
+    : isSignIn = true,
+      isPhoneMode = false,
+      contact = '';
+  const new verification({
+    super.key,
+    this.isPhoneMode = false,
+    required this.contact,
+  }) : isSignIn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +33,18 @@ class AuthHeader extends StatelessWidget {
           mainAxisSize: .min,
           spacing: SpacingSize.md,
           children: [
-            Image.asset(isSignIn ? IconAsset.logo : IconAsset.send, width: IconSize.lg),
+            Image.asset(
+              isSignIn ? IconAsset.logo : IconAsset.send,
+              width: IconSize.lg,
+            ),
             Text(
-              isSignIn ? AuthString.signIn.title : AuthString.verification.title,
-              style: textTheme.headlineMedium?.copyWith(color: scheme.primary, fontWeight: .w600),
+              isSignIn
+                  ? AuthString.signIn.title
+                  : AuthString.verification.title,
+              style: textTheme.headlineMedium?.copyWith(
+                color: scheme.primary,
+                fontWeight: .w600,
+              ),
             ),
           ],
         ),

@@ -1,28 +1,54 @@
-part of 'snackbar.dart';
+import 'dart:async';
+import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+
+import '../../constant/radius_size.dart';
+import '../../constant/spacing_size.dart';
+import '../../constant/stroke_size.dart';
+import '../../extension/media_query_x.dart';
+import '../../theme/app_theme.dart';
+import 'snackbar_inset.dart';
+
+part '_snackbar_host.dart';
+
+enum SnackbarType { info, success, warning, error }
 
 class AppSnackbar {
-  const AppSnackbar._();
+  static OverlayEntry? _entry;
 
-  static SnackBar build({
+  const new _();
+
+  static void show(
+    BuildContext context, {
     required String message,
-    required Color backgroundColor,
-    required Color foregroundColor,
-    required Color borderColor,
-    required TextTheme textTheme,
+    required SnackbarType type,
+    Duration duration = const Duration(seconds: 3),
   }) {
-    return SnackBar(
-      backgroundColor: backgroundColor,
-      behavior: .floating,
-      margin: const .symmetric(horizontal: SpacingSize.xl, vertical: 80.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: .circular(RadiusSize.sm),
-        side: BorderSide(color: borderColor, width: StrokeSize.thin),
-      ),
-      padding: const .all(SpacingSize.lg),
-      content: Text(
-        message,
-        style: textTheme.bodyMedium?.copyWith(color: foregroundColor),
+    final overlay = Overlay.maybeOf(context, rootOverlay: true);
+    if (overlay == null) return;
+
+    _remove();
+
+    late final OverlayEntry entry;
+    entry = OverlayEntry(
+      builder: (_) => _SnackbarHost(
+        message: message,
+        type: type,
+        duration: duration,
+        onDismissed: () {
+          if (_entry == entry) _remove();
+        },
       ),
     );
+
+    _entry = entry;
+    overlay.insert(entry);
+  }
+
+  static void _remove() {
+    _entry?.remove();
+    _entry?.dispose();
+    _entry = null;
   }
 }

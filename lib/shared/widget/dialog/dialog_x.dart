@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:icons_plus_pro/icons_plus_pro.dart';
 
+import '../../constant/app_string.dart';
 import '../../constant/button_size.dart';
 import '../../constant/icon_size.dart';
 import '../../constant/spacing_size.dart';
@@ -22,7 +22,12 @@ extension DialogX on BuildContext {
         message: message,
         icon: Iconsax.information_outline,
         iconColor: scheme.info,
-        actions: [AppButton.ghost(onPressed: () => ctx.pop(), label: 'OK')],
+        actions: [
+          AppButton.ghost(
+            onPressed: () => Navigator.of(ctx).pop(),
+            label: AppString.ok,
+          ),
+        ],
       ),
     );
   }
@@ -32,6 +37,7 @@ extension DialogX on BuildContext {
     required String message,
     required String confirmText,
     required VoidCallback onConfirm,
+    String cancelText = 'Cancel',
     bool isLoading = false,
     bool? barrierDisabled,
   }) {
@@ -46,8 +52,8 @@ extension DialogX on BuildContext {
         actions: [
           AppButton.ghost(
             isDisabled: isLoading,
-            onPressed: () => ctx.pop(),
-            label: 'Cancel',
+            onPressed: () => Navigator.of(ctx).pop(),
+            label: cancelText,
             foregroundColor: scheme.onSurfaceVariant,
           ),
           const SizedBox(width: SpacingSize.sm),
@@ -81,8 +87,8 @@ extension DialogX on BuildContext {
         actions: [
           AppButton.ghost(
             isDisabled: isLoading,
-            onPressed: () => ctx.pop(),
-            label: 'Cancel',
+            onPressed: () => Navigator.of(ctx).pop(),
+            label: AppString.cancel,
             foregroundColor: scheme.onSurfaceVariant,
           ),
           const SizedBox(width: SpacingSize.sm),
@@ -113,13 +119,13 @@ extension DialogX on BuildContext {
         iconColor: scheme.warning,
         actions: [
           AppButton.ghost(
-            onPressed: () => ctx.pop(false),
-            label: 'Cancel',
+            onPressed: () => Navigator.of(ctx).pop(false),
+            label: AppString.cancel,
             foregroundColor: scheme.onSurfaceVariant,
           ),
           const SizedBox(width: SpacingSize.sm),
           AppButton(
-            onPressed: () => ctx.pop(true),
+            onPressed: () => Navigator.of(ctx).pop(true),
             label: retryText,
             minimumSize: const Size(.0, ButtonSize.sm),
           ),
@@ -144,9 +150,9 @@ extension DialogX on BuildContext {
 
   Future<void> dialogLogOut() async {
     return await dialogDestructive(
-      title: 'Sign Out',
-      message: 'Are you sure you want to sign out of your account?',
-      destructiveText: 'Sign Out',
+      title: AppString.signOut,
+      message: AppString.signOutMessage,
+      destructiveText: AppString.signOut,
       onConfirm: read<SessionCubit>().signOut,
     );
   }

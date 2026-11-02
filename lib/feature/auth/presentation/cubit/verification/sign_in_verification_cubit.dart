@@ -26,8 +26,6 @@ class SignInVerificationCubit extends Cubit<SignInVerificationState> {
       ),
     );
 
-    await Future.delayed(const Duration(seconds: 3));
-
     final result = isPhoneMode
         ? await _inVerification.call(phone: contact, otp: otp)
         : await _inVerification.call(email: contact, otp: otp);

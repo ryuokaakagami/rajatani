@@ -9,8 +9,4 @@ class _VerificationString {
       '$contact to verify your account.';
 
   final buttonVerifyLabel = 'Verify';
-
-  final didntReceive = 'Didn\'t receive the code?';
-  final resendIn = 'Resend in';
-  final resendNow = 'Resend now';
 }

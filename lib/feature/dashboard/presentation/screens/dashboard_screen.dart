@@ -54,18 +54,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
           },
 
           child: HideOnScroll(
+            onVisibilityChanged: (visible) => SnackbarInset.setHidden(!visible),
             body: widget.navigationShell,
-            child: CustomNavigationBar(
-              selectedIndex: widget.navigationShell.currentIndex,
-              onSelected: (index) {
-                widget.navigationShell.goBranch(
-                  index,
-                  initialLocation: index == widget.navigationShell.currentIndex,
-                );
-              },
-              items: DashboardNavigation.items(
-                avatarUrl: avatarUrl,
-                username: username,
+            child: SnackbarAnchor(
+              child: CustomNavigationBar(
+                selectedIndex: widget.navigationShell.currentIndex,
+                onSelected: (index) {
+                  widget.navigationShell.goBranch(
+                    index,
+                    initialLocation:
+                        index == widget.navigationShell.currentIndex,
+                  );
+                },
+                items: DashboardNavigation.items(
+                  avatarUrl: avatarUrl,
+                  username: username,
+                ),
               ),
             ),
           ),

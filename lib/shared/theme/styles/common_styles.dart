@@ -12,6 +12,7 @@ class CommonStyles {
       backgroundColor: scheme.surface,
       modalBackgroundColor: scheme.surface,
       dragHandleColor: scheme.onSurfaceVariant,
+      showDragHandle: true,
     );
   }
 
