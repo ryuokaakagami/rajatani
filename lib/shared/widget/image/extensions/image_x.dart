@@ -2,42 +2,18 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:croppy/croppy.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../../constant/app_icon.dart';
-import '../../../constant/icon_size.dart';
-import '../../../constant/spacing_size.dart';
-import '../../../theme/app_theme.dart';
-import '../../bottom_sheet/sheet_x.dart';
-import '../../button/button.dart';
-import '../../menu/menu.dart';
+import '../../bottom_sheet/bottom_sheet.dart';
 import '../enums/image_picker_type.dart';
-import 'image_picker_x.dart';
-
-part '../styles/_image_picker_sheet_header.dart';
-part '../styles/_image_picker_sheet_item.dart';
+import '../styles/image_picker_sheet_layout.dart';
 
 extension ImageX on BuildContext {
   Future<ImagePickerType?> showImagePickerSheet({bool showDelete = true}) {
     return showAppBottomSheet<ImagePickerType>(
       builder: (context) {
-        return [
-          _ImagePickerSheetHeader(
-            showDelete: showDelete,
-            onTapDelete: () {
-              context.pop(ImagePickerType.delete);
-            },
-          ),
-
-          for (final type in ImagePickerType.sources)
-            _ImagePickerSheetItem(
-              icon: type.icon,
-              label: type.title,
-              onTap: () => context.pop(type),
-            ),
-        ];
+        return ImagePickerSheetLayout(showDelete: showDelete);
       },
     );
   }

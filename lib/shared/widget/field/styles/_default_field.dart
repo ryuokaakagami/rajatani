@@ -58,7 +58,7 @@ class _DefaultField extends StatelessWidget {
       minLines: minLines ?? 1,
       maxLines: maxLines ?? 1,
       maxLength: maxLength,
-      readOnly: readOnly,
+      readOnly: readOnly || isDisabled,
       inputFormatters: formatters,
       decoration: InputDecoration(
         hintText: hintText,

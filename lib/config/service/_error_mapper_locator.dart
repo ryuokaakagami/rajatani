@@ -70,6 +70,9 @@ void _errorInjection() {
     () => CompositeExceptionMapper(
       mappers: [
         sl<AppExceptionMapper>(
+          instanceName: ErrorLocatorInstance.authErrorMapper.name,
+        ),
+        sl<AppExceptionMapper>(
           instanceName: ErrorLocatorInstance.databaseErrorMapper.name,
         ),
         sl<AppExceptionMapper>(

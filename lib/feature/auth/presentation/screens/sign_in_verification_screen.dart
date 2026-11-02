@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../shared/widget/widget.dart';
-import '../cubit/resend/resend_timer_cubit.dart';
 import '../cubit/verification/sign_in_verification_cubit.dart';
 import '../form/verification/sign_in_verification_form.dart';
 import '../widgets/auth_header.dart';
 import '../widgets/auth_layout.dart';
-import '../widgets/or_divider.dart';
-import '../widgets/resend_code.dart';
 
 class SignInVerificationScreen extends StatelessWidget {
   final String contact;

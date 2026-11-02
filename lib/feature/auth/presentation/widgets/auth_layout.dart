@@ -21,7 +21,11 @@ class AuthLayout extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Center(
-                      child: Column(mainAxisSize: .min, spacing: SpacingSize.lg, children: children),
+                      child: Column(
+                        mainAxisSize: .min,
+                        spacing: SpacingSize.lg,
+                        children: children,
+                      ),
                     ),
                   ),
 

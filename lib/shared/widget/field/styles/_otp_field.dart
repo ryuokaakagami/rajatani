@@ -6,7 +6,12 @@ class _OtpField extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextEditingController? controller;
 
-  const new({required this.isLoading, this.onSubmitted, this.validator, this.controller});
+  const new({
+    required this.isLoading,
+    this.onSubmitted,
+    this.validator,
+    this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +28,7 @@ class _OtpField extends StatelessWidget {
       validator: validator,
       controller: controller,
       keyboardType: .number,
+      readOnly: isLoading,
       defaultPinTheme: PinTheme(
         width: 56.0,
         height: 56.0,

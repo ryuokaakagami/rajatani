@@ -13,7 +13,7 @@ import '../form/sign_in/sign_in_form.dart';
 import '../widgets/auth_header.dart';
 import '../widgets/auth_layout.dart';
 import '../widgets/auth_mode_switcher.dart';
-import '../widgets/or_divider.dart';
+import '../../../../shared/widget/or_divider.dart';
 
 class SignInScreen extends StatelessWidget {
   const new({super.key});
@@ -26,7 +26,10 @@ class SignInScreen extends StatelessWidget {
         state.maybeWhen(
           success: (method, contact) {
             if (method == .form) {
-              final isPhoneMode = context.read<SignInModeCubit>().state.isPhoneMode;
+              final isPhoneMode = context
+                  .read<SignInModeCubit>()
+                  .state
+                  .isPhoneMode;
               context.pushNamed(
                 RoutesConstant.names.signInVerification,
                 extra: (contact, isPhoneMode),
@@ -51,7 +54,9 @@ class SignInScreen extends StatelessWidget {
 
             const OrDivider(),
 
-            AuthButtonModeSwitcher(isLoading: state.isFormLoading || state.isGoogleLoading),
+            AuthButtonModeSwitcher(
+              isLoading: state.isFormLoading || state.isGoogleLoading,
+            ),
 
             AppButton.outlined(
               onPressed: cubit.signInWithGoogle,

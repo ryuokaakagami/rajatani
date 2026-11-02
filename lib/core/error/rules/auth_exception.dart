@@ -42,6 +42,32 @@ class AuthInvalidEmailException extends AppException {
   const new() : super(message: 'The email address is invalid or unsupported.');
 }
 
+// --- Contact Change Exceptions ---
+class AuthEmailAlreadyUsedException extends AppException {
+  const AuthEmailAlreadyUsedException()
+    : super(message: 'This email address is already used by another account.');
+}
+
+class AuthPhoneAlreadyUsedException extends AppException {
+  const AuthPhoneAlreadyUsedException()
+    : super(message: 'This phone number is already used by another account.');
+}
+
+class AuthInvalidContactException extends AppException {
+  const AuthInvalidContactException()
+    : super(message: 'The email address or phone number is invalid.');
+}
+
+class AuthReauthenticationRequiredException extends AppException {
+  const AuthReauthenticationRequiredException()
+    : super(message: 'Please verify your identity again before changing this.');
+}
+
+class AuthSessionExpiredAppException extends AppException {
+  const AuthSessionExpiredAppException()
+    : super(message: 'Your session has ended. Please sign in again.');
+}
+
 // --- Google Sign-In Exceptions ---
 class AuthGoogleInterruptedException extends AppException {
   const new()

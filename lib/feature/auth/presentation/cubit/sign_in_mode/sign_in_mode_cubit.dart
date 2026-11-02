@@ -9,12 +9,16 @@ class SignInModeCubit extends HydratedCubit<SignInModeState> {
   new() : super(SignInModeState.email());
 
   @override
-  SignInModeState? fromJson(Map<String, dynamic> json) => SignInModeState.fromJson(json);
+  SignInModeState? fromJson(Map<String, dynamic> json) =>
+      SignInModeState.fromJson(json);
 
   @override
   Map<String, dynamic>? toJson(SignInModeState state) => state.toJson();
 
   void changeMode() {
-    state.when(email: () => emit(const SignInModeState.phone()), phone: () => emit(const SignInModeState.email()));
+    state.when(
+      email: () => emit(const SignInModeState.phone()),
+      phone: () => emit(const SignInModeState.email()),
+    );
   }
 }

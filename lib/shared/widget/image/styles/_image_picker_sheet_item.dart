@@ -1,4 +1,4 @@
-part of '../extensions/image_x.dart';
+part of 'image_picker_sheet_layout.dart';
 
 class _ImagePickerSheetItem extends StatelessWidget {
   final VoidCallback? onTap;
@@ -12,10 +12,7 @@ class _ImagePickerSheetItem extends StatelessWidget {
     return AppMenu.item(
       onTap: onTap,
       icon: icon,
-      itemPadding: .symmetric(
-        horizontal: SpacingSize.xl,
-        vertical: SpacingSize.lg,
-      ),
+      itemPadding: .symmetric(vertical: SpacingSize.lg),
       itemRadius: .zero,
       titleColor: context.scheme.onBackground,
       title: label,

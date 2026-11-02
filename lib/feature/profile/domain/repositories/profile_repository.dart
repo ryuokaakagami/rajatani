@@ -11,6 +11,22 @@ abstract class ProfileRepository {
     required ProfileUpdate data,
   });
 
+  Future<Either<AppException, Unit>> requestContactUpdate({
+    String? email,
+    String? phone,
+  });
+
+  Future<Either<AppException, bool>> verifyContactUpdate({
+    String? email,
+    String? phone,
+    required String otp,
+  });
+
+  Future<Either<AppException, Unit>> resendRequestContactUpdate({
+    String? email,
+    String? phone,
+  });
+
   Future<Either<AppException, Unit>> checkUsernameAvailable({
     required String username,
     required String userId,

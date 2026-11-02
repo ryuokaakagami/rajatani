@@ -22,9 +22,13 @@ abstract class SignInVerificationState with _$SignInVerificationState {
 
   const factory SignInVerificationState.error(String message) = _Error;
 
-  bool get isVerifyLoading =>
-      maybeWhen(loading: (contact, action, isPhoneMode) => action == .verify, orElse: () => false);
+  bool get isVerifyLoading => maybeWhen(
+    loading: (contact, action, isPhoneMode) => action == .verify,
+    orElse: () => false,
+  );
 
-  bool get isResendLoading =>
-      maybeWhen(loading: (contact, action, isPhoneMode) => action == .resend, orElse: () => false);
+  bool get isResendLoading => maybeWhen(
+    loading: (contact, action, isPhoneMode) => action == .resend,
+    orElse: () => false,
+  );
 }

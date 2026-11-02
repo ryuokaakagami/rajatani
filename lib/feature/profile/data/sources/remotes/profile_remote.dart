@@ -6,6 +6,17 @@ import '../../models/profile_update.dart';
 
 abstract class ProfileRemote {
   Future<Unit> update({required String userId, required ProfileUpdate data});
+
+  Future<Unit> requestContactUpdate({String? email, String? phone});
+
+  Future<bool> verifyContactUpdate({
+    String? email,
+    String? phone,
+    required String otp,
+  });
+
+  Future<Unit> resendRequestContactUpdate({String? email, String? phone});
+
   Future<Unit> checkUsernameAvailable({
     required String username,
     required String userId,
